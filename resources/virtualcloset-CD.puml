@@ -1,0 +1,117 @@
+@startuml
+
+class AddClothingItemToOutfitActivity {
+    -OutfitDao : outfitDao
+    -ClothingItemDao : clothingItemDao
+    + handleRequest(AddClothingItemToOutfitRequest : addClothingItemToOutfitRequest) : AddClothingItemToOutfitResult
+}
+
+
+class UpdateOutfitActivity {
+    -OutfitDao : outfitDao
+    +handleRequest(UpdateOutfitRequest : updateOutfitRequest) : UpdateOutfitResult
+}
+
+
+class CreateOutfitActivity {
+    -OutfitDao : outfitDao
+    +handleRequest(CreateOutfitRequest : createOutfitRequest) : CreateOutfitResult
+}
+
+
+class GetOutfitActivity {
+    -OutfitDao : outfitDao
+    +handleRequest(GetOutfitRequest : getOutfitRequest) : GetOutfitResult
+}
+
+
+class GetOutfitClothingItemsActivity {
+    -OutfitDao : outfitDao
+    +handleRequest(GetOutfitClothingItemsRequest : getOutfitClothingItemsRequest) : GetOutfitClothingItemsResult
+}
+
+
+class ViewAllCreatedOutfitsActivity {
+    -OutfitDao : outfitDao
+    +handleRequest(ViewAllCreatedOutfitsRequest : viewAllCreatedOutfitsRequest) : ViewAllCreatedOutfitsResult
+}
+
+
+class RemoveClothingItemFromOutfitActivity {
+    -OutfitDao : outfitDao
+    -ClothingItemDao : clothingItemDao
+    + handleRequest(RemoveClothingItemFromOutfitRequest : removeClothingItemFromOutfitRequest) : RemoveClothingItemFromOutfitResult
+}
+
+
+class RemoveOutfitActivity {
+    -OutfitDao : outfitDao
+    +handleRequest(RemoveOutfitRequest : removeOutfitRequest) : RemoveOutfitResult
+}
+
+
+class TrackOutfitWornActivity {
+    -OutfitDao : outfitDao
+    +handleRequest(TrackOutfitWornRequest : trackOutfitWornRequest) : TrackOutfitWornResult
+}
+
+
+class TrackClothingItemWornActivity {
+    -ClothingItemDao : clothingItemDao
+    +handleRequest(TrackClothingItemWornRequest : trackClothingItemWornRequest) : TrackClothingItemWornResult
+}
+
+
+class OutfitDao {
+    -DynamoDBMapper : dynamoDbMapper
+    -MetricsPublisher : metricsPublisher
+    +getOutfit(String : id) : Outfit
+}
+
+
+class ClothingItemDao {
+    -DynamoDBMapper : dynamoDbMapper
+}
+
+
+class OutfitModel {
+    -DynamoDBHashKey String : id
+    -String : name
+    -String : customerId
+    -int : clothingCount
+    -List<String> : tags
+    -List<String> : clothingItemList
+    -int : wornCount
+}
+
+
+class ClothingItemModel {
+    -DynamoDBHashKey String : clothingId
+    -int : wornCount
+    -String : category
+    -String : color
+    -String : fit
+    -String : length
+    -String : weather
+    -String : occasion
+}
+
+
+class OutfitNotFoundException extends RuntimeException {}
+class ClothingItemNotFoundException extends RuntimeException {}
+
+
+AddClothingItemToOutfitActivity *-- ClothingItemDao
+AddClothingItemToOutfitActivity *---- OutfitDao
+CreateOutfitActivity *---- OutfitDao
+GetOutfitActivity *--- OutfitDao
+GetOutfitClothingItemsActivity *--- OutfitDao
+ViewAllCreatedOutfitsActivity *-- OutfitDao
+RemoveClothingItemFromOutfitActivity *-- ClothingItemDao
+RemoveClothingItemFromOutfitActivity *-- OutfitDao
+UpdateOutfitActivity *----- OutfitDao
+RemoveOutfitActivity *----- OutfitDao
+TrackOutfitWornActivity *---- OutfitDao
+TrackClothingItemWornActivity *-- ClothingItemDao
+
+@enduml
