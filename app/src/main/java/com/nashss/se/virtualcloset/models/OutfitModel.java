@@ -32,6 +32,10 @@ public class OutfitModel {
         return copyToList(tags);
     }
 
+    public int getWornCount() {
+        return wornCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
