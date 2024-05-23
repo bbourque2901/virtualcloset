@@ -112,14 +112,19 @@ U10. As a user, I want to be able to keep track of how many times I’ve worn an
 
 # Tables 
 
+### 'outfits'
+```
 //outfits
 id // partition key, string
 name // string
-customerId // string, customerId-outfit-index partition key
+customerId // string
 tags // stringSet
 clothingItemList // list
 wornCount // number
+```
 
+### 'clothing'
+```
 //clothing
 clothingId // partition key, string
 wornCount // number, CategoryWornCountIndex sort key
@@ -129,6 +134,7 @@ fit // string
 length // string
 weather // string
 occasion // string
+```
 
 # Mockup Pages
 
