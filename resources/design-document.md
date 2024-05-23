@@ -117,7 +117,7 @@ U10. As a user, I want to be able to keep track of how many times I’ve worn an
 //outfits
 id // partition key, string
 name // string
-customerId // string, customerId-outfit-index partition key
+customerId // string
 tags // stringSet
 clothingItemList // list
 wornCount // number

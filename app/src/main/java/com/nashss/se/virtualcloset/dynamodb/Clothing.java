@@ -1,7 +1,10 @@
 package com.nashss.se.virtualcloset.dynamodb;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+
 import java.util.Objects;
 
+@DynamoDBTable(tableName = "clothing")
 public class Clothing {
     private String clothingId;
     private Integer wornCount;
@@ -12,6 +15,7 @@ public class Clothing {
     private String weather;
     private String occasion;
 
+    @DynamoDBHashKey(attributeName = "clothingId")
     public String getClothingId() {
         return clothingId;
     }
@@ -20,6 +24,7 @@ public class Clothing {
         this.clothingId = clothingId;
     }
 
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "CategoryWornCountIndex", attributeName = "wornCount")
     public Integer getWornCount() {
         return wornCount;
     }
@@ -28,6 +33,7 @@ public class Clothing {
         this.wornCount = wornCount;
     }
 
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "CategoryWornCountIndex", attributeName = "category")
     public String getCategory() {
         return category;
     }
@@ -36,6 +42,7 @@ public class Clothing {
         this.category = category;
     }
 
+    @DynamoDBAttribute(attributeName = "color")
     public String getColor() {
         return color;
     }
@@ -44,6 +51,7 @@ public class Clothing {
         this.color = color;
     }
 
+    @DynamoDBAttribute(attributeName = "fit")
     public String getFit() {
         return fit;
     }
@@ -52,6 +60,7 @@ public class Clothing {
         this.fit = fit;
     }
 
+    @DynamoDBAttribute(attributeName = "length")
     public String getLength() {
         return length;
     }
@@ -60,6 +69,7 @@ public class Clothing {
         this.length = length;
     }
 
+    @DynamoDBAttribute(attributeName = "weather")
     public String getWeather() {
         return weather;
     }
@@ -68,6 +78,7 @@ public class Clothing {
         this.weather = weather;
     }
 
+    @DynamoDBAttribute(attributeName = "occasion")
     public String getOccasion() {
         return occasion;
     }
