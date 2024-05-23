@@ -7,6 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModelConverter {
+
+    /**
+     * Converts a provided {@link Outfit} into a {@link OutfitModel} representation.
+     *
+     * @param outfit the outfit to convert
+     * @return the converted outfit
+     */
     public OutfitModel toOutfitModel(Outfit outfit) {
         List<String> tags = null;
         if (outfit.getTags() != null) {

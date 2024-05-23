@@ -1,9 +1,10 @@
 package com.nashss.se.virtualcloset.lambda;
 
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.nashss.se.virtualcloset.activity.requests.GetOutfitRequest;
 import com.nashss.se.virtualcloset.activity.results.GetOutfitResult;
+
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 public class GetOutfitLambda
         extends LambdaActivityRunner<GetOutfitRequest, GetOutfitResult>

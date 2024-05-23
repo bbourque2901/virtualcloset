@@ -1,10 +1,7 @@
 package com.nashss.se.virtualcloset.models;
 
-import com.nashss.se.virtualcloset.dynamodb.Clothing;
-
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import static com.nashss.se.virtualcloset.utils.CollectionUtils.copyToList;
 
