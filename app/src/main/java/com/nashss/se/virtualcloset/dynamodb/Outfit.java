@@ -1,11 +1,13 @@
 package com.nashss.se.virtualcloset.dynamodb;
 
+import com.nashss.se.virtualcloset.converters.ClothingLinkedListConverter;
+
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
-import com.nashss.se.virtualcloset.converters.ClothingLinkedListConverter;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -47,6 +49,10 @@ public class Outfit {
         this.customerId = customerId;
     }
 
+    /**
+     * getter for the tags for an outfit.
+     * @return tags
+     */
     @DynamoDBAttribute(attributeName = "tags")
     public Set<String> getTags() {
         if (null == tags) {
@@ -55,13 +61,16 @@ public class Outfit {
         return new HashSet<>(tags);
     }
 
+    /**
+     * setter for the tags for an outfit.
+     * @param tags set of tags passed in
+     */
     public void setTags(Set<String> tags) {
         if (null == tags) {
             this.tags = null;
         } else {
             this.tags = new HashSet<>(tags);
         }
-
         this.tags = tags;
     }
 
@@ -71,7 +80,15 @@ public class Outfit {
         return clothingItems;
     }
 
-    public void setClothingItemList(List<Clothing> clothingItems) {
+    /**
+     * setter for the list of clothing items.
+     * ensures list can't be null
+     * @param clothingItems list of clothing items
+     */
+    public void setClothingItems(List<Clothing> clothingItems) {
+        if (clothingItems == null) {
+            this.clothingItems = new ArrayList<>();
+        }
         this.clothingItems = clothingItems;
     }
 
@@ -86,8 +103,12 @@ public class Outfit {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Outfit outfit = (Outfit) o;
         return Objects.equals(id, outfit.id) &&
                 Objects.equals(name, outfit.name) &&
