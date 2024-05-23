@@ -2,8 +2,12 @@ package com.nashss.se.virtualcloset.lambda;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.nashss.se.virtualcloset.activity.requests.GetOutfitRequest;
+import com.nashss.se.virtualcloset.activity.results.GetOutfitResult;
 
-public class GetOutfitLambda implements RequestHandler<LambdaRequest<LambdaRequest>, LambdaResponse> {
+public class GetOutfitLambda
+        extends LambdaActivityRunner<GetOutfitRequest, GetOutfitResult>
+        implements RequestHandler<LambdaRequest<GetOutfitRequest>, LambdaResponse> {
     /**
      * Handles a Lambda Function request.
      *
@@ -12,7 +16,7 @@ public class GetOutfitLambda implements RequestHandler<LambdaRequest<LambdaReque
      * @return The Lambda Function output
      */
     @Override
-    public LambdaResponse handleRequest(LambdaRequest<LambdaRequest> input, Context context) {
+    public LambdaResponse handleRequest(LambdaRequest<GetOutfitRequest> input, Context context) {
         return LambdaResponse.success();
     }
 }
