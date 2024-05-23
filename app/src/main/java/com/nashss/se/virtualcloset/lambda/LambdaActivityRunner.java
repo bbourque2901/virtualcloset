@@ -1,5 +1,6 @@
 package com.nashss.se.virtualcloset.lambda;
 
+import com.nashss.se.virtualcloset.dependency.DaggerServiceComponent;
 import com.nashss.se.virtualcloset.dependency.ServiceComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
