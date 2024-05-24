@@ -22,6 +22,7 @@ public class ModelConverter {
         return OutfitModel.builder()
                 .withId(outfit.getId())
                 .withName(outfit.getName())
+                .withCustomerId(outfit.getCustomerId())
                 .withTags(tags)
                 .withWornCount(outfit.getWornCount())
                 .build();

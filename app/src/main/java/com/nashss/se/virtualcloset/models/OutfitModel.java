@@ -35,6 +35,9 @@ public class OutfitModel {
     public int getWornCount() {
         return wornCount;
     }
+    public String getCustomerId() {
+        return customerId;
+    }
 
     @Override
     public boolean equals(Object o) {

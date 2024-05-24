@@ -26,12 +26,12 @@ public class GetOutfitLambda
     public LambdaResponse handleRequest(LambdaRequest<GetOutfitRequest> input, Context context) {
         log.info("handlerequest");
         return super.runActivity(
-                () -> input.fromPath(path ->
-                        GetOutfitRequest.builder()
-                                .withId(path.get("id"))
-                                .build()),
-                (request, serviceComponent) ->
-                        serviceComponent.provideGetOutfitActivity().handleRequest(request)
+            () -> input.fromPath(path ->
+                    GetOutfitRequest.builder()
+                            .withId(path.get("id"))
+                            .build()),
+            (request, serviceComponent) ->
+                    serviceComponent.provideGetOutfitActivity().handleRequest(request)
         );
     }
 }
