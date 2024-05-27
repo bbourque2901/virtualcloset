@@ -44,11 +44,12 @@ public class OutfitDao {
     /**
      * Checks if outfit attributes are valid.
      *
+     * @param string String to check for invalid characters.
      * @return if outfit attributes are valid.
      */
-    public static boolean isValidString(String name) {
+    public static boolean isValidString(String string) {
         String validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -";
-        return StringUtils.containsOnly(name, validChars);
+        return StringUtils.containsOnly(string, validChars);
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.nashss.se.virtualcloset.exceptions;
 
-public class InvalidAttributeValueException extends RuntimeException{
+public class InvalidAttributeValueException extends RuntimeException {
     private static final long serialVersionUID = 4404774799222515497L;
 
     /**

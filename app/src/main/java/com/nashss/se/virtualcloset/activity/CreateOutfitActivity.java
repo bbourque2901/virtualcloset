@@ -7,14 +7,15 @@ import com.nashss.se.virtualcloset.dynamodb.Outfit;
 import com.nashss.se.virtualcloset.dynamodb.OutfitDao;
 import com.nashss.se.virtualcloset.exceptions.InvalidAttributeValueException;
 import com.nashss.se.virtualcloset.models.OutfitModel;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import javax.inject.Inject;
 
 public class CreateOutfitActivity {
     private final Logger log = LogManager.getLogger();
@@ -39,6 +40,7 @@ public class CreateOutfitActivity {
      * InvalidAttributeValueException
      *
      * @param createOutfitRequest request object with outfit name and customer ID
+     * @return createOutfitResult result outfit object.
      */
     public CreateOutfitResult handleRequest(final CreateOutfitRequest createOutfitRequest) {
         log.info("Received CreateOutfitRequest {}", createOutfitRequest);
