@@ -246,7 +246,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Role: !GetAtt AccessRole.Arn
-      CodeUri: MusicPlaylistServiceLambda
+      CodeUri: app
       Handler: com.nashss.se.virtualcloset.lambda.CreateOutfitLambda::handleRequest
       Runtime: java11
       Architectures:
