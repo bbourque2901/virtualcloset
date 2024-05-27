@@ -4,6 +4,8 @@ import com.nashss.se.virtualcloset.exceptions.OutfitNotFoundException;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -36,6 +38,28 @@ public class OutfitDao {
         if (outfit == null) {
             throw new OutfitNotFoundException("Could not find outfit with id " + id);
         }
+        return outfit;
+    }
+
+    /**
+     * Checks if outfit attributes are valid.
+     *
+     * @param string String to check for invalid characters.
+     * @return if outfit attributes are valid.
+     */
+    public static boolean isValidString(String string) {
+        String validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -";
+        return StringUtils.containsOnly(string, validChars);
+    }
+
+    /**
+     * Saves the given outfit.
+     *
+     * @param outfit The outfit to save
+     * @return The outfit object that was saved
+     */
+    public Outfit saveOutfit(Outfit outfit) {
+        this.dynamoDBMapper.save(outfit);
         return outfit;
     }
 }
