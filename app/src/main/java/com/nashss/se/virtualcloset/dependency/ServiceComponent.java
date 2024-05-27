@@ -15,4 +15,12 @@ public interface ServiceComponent {
      * @return GetOutfitActivity
      */
     GetOutfitActivity provideGetOutfitActivity();
+
+    /**
+     * Creates the relevant activity.
+     * @return CreateOutfitActivity
+     */
+    CreateOutfitActivity provideCreateOutfitActivity();
 }
+
+
