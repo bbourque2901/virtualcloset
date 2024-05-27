@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 
 import java.util.List;
 
+import static com.nashss.se.virtualcloset.utils.CollectionUtils.copyToList;
+
+
 @JsonDeserialize(builder = CreateOutfitRequest.Builder.class)
 public class CreateOutfitRequest {
     private final String name;
@@ -26,7 +29,7 @@ public class CreateOutfitRequest {
     }
 
     public List<String> getTags() {
-        return List.copyOf(tags);
+        return copyToList(tags);
     }
 
     @Override

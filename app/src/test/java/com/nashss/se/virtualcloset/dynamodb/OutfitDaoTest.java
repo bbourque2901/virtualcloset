@@ -45,4 +45,17 @@ class OutfitDaoTest {
         //WHEN & THEN
         assertThrows(OutfitNotFoundException.class, () -> outfitDao.getOutfit(nonexistentOutfitId));
     }
+
+    @Test
+    public void saveOutfit_callsMapperWithOutfit() {
+        //GIVEN
+        Outfit outfit = new Outfit();
+
+        //WHEN
+        Outfit result = outfitDao.saveOutfit(outfit);
+
+        //THEN
+        verify(dynamoDBMapper).save(outfit);
+        assertEquals(outfit, result);
+    }
 }
