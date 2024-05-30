@@ -31,7 +31,7 @@ class ViewOutfit extends BindingClass {
 }
 
 mount() {
-    document.getElementById('add-clothing').addEventListener('click', this.addClothing);
+    //document.getElementById('add-clothing').addEventListener('click', this.addClothing);
 
     this.header.addHeaderToPage();
 
