@@ -63,7 +63,7 @@ public class CreateOutfitRequest {
         }
 
         public Builder withTags(List<String> tags) {
-            this.tags = List.copyOf(tags);
+            this.tags = copyToList(tags);
             return this;
         }
 

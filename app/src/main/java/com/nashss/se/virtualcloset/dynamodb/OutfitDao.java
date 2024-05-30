@@ -48,7 +48,7 @@ public class OutfitDao {
      * @return if outfit attributes are valid.
      */
     public static boolean isValidString(String string) {
-        String validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -";
+        String validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -@+ 1234567890.";
         return StringUtils.containsOnly(string, validChars);
     }
 

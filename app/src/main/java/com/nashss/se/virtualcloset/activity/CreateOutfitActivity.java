@@ -51,7 +51,7 @@ public class CreateOutfitActivity {
         }
 
         if (!outfitDao.isValidString(createOutfitRequest.getCustomerId())) {
-            throw new InvalidAttributeValueException("Outfit customer ID [" + createOutfitRequest.getCustomerId() +
+            throw new InvalidAttributeValueException("CustomerId [" + createOutfitRequest.getCustomerId() +
                     "] contains illegal characters");
         }
 
