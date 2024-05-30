@@ -2,6 +2,7 @@ package com.nashss.se.virtualcloset.dependency;
 
 import com.nashss.se.virtualcloset.activity.CreateOutfitActivity;
 import com.nashss.se.virtualcloset.activity.GetOutfitActivity;
+import com.nashss.se.virtualcloset.activity.UpdateOutfitActivity;
 
 import dagger.Component;
 
@@ -22,6 +23,12 @@ public interface ServiceComponent {
      * @return CreateOutfitActivity
      */
     CreateOutfitActivity provideCreateOutfitActivity();
+
+    /**
+     * Creates the relevant activity.
+     * @return UpdateOutfitActivity
+     */
+    UpdateOutfitActivity provideUpdateOutfitActivity();
 }
 
 
