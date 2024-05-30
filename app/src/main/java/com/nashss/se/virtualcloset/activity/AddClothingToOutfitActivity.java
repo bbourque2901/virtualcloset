@@ -9,12 +9,13 @@ import com.nashss.se.virtualcloset.dynamodb.Outfit;
 import com.nashss.se.virtualcloset.dynamodb.OutfitDao;
 
 import com.nashss.se.virtualcloset.models.ClothingModel;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.inject.Inject;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import javax.inject.Inject;
 
 public class AddClothingToOutfitActivity {
     private final Logger log = LogManager.getLogger();
@@ -60,7 +61,7 @@ public class AddClothingToOutfitActivity {
         }
 
         Clothing newClothingItem = clothingDao.getClothing(clothingId);
-        ArrayList<Clothing> clothingItems = (ArrayList<Clothing>) (outfit.getClothingItems());
+        LinkedList<Clothing> clothingItems = (LinkedList<Clothing>) (outfit.getClothingItems());
         clothingItems.add(newClothingItem);
 
         outfit.setClothingItems(clothingItems);
