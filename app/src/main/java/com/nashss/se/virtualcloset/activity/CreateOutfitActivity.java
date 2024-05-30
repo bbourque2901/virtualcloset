@@ -50,10 +50,6 @@ public class CreateOutfitActivity {
                     "] contains illegal characters");
         }
 
-        if (!outfitDao.isValidString(createOutfitRequest.getCustomerId())) {
-            throw new InvalidAttributeValueException("Outfit customer ID [" + createOutfitRequest.getCustomerId() +
-                    "] contains illegal characters");
-        }
 
         Set<String> outfitTags = null;
         if (createOutfitRequest.getTags() != null) {
