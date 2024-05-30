@@ -50,7 +50,6 @@ public class CreateOutfitActivity {
                     "] contains illegal characters");
         }
 
-
         Set<String> outfitTags = null;
         if (createOutfitRequest.getTags() != null) {
             outfitTags = new HashSet<>(createOutfitRequest.getTags());
