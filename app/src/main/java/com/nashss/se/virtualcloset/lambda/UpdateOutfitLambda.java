@@ -13,17 +13,17 @@ public class UpdateOutfitLambda
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<UpdateOutfitRequest> input, Context context) {
         return super.runActivity(
-                () -> {
-                    UpdateOutfitRequest unauthenticatedRequest = input.fromBody(UpdateOutfitRequest.class);
-                    return input.fromUserClaims(claims ->
-                            UpdateOutfitRequest.builder()
-                                    .withId(unauthenticatedRequest.getId())
-                                    .withName(unauthenticatedRequest.getName())
-                                    .withCustomerId(claims.get("email"))
-                                    .build());
-                },
-                (request, serviceComponent) ->
-                        serviceComponent.provideUpdateOutfitActivity().handleRequest(request)
+            () -> {
+                UpdateOutfitRequest unauthenticatedRequest = input.fromBody(UpdateOutfitRequest.class);
+                return input.fromUserClaims(claims ->
+                        UpdateOutfitRequest.builder()
+                                .withId(unauthenticatedRequest.getId())
+                                .withName(unauthenticatedRequest.getName())
+                                .withCustomerId(claims.get("email"))
+                                .build());
+            },
+            (request, serviceComponent) ->
+                    serviceComponent.provideUpdateOutfitActivity().handleRequest(request)
         );
     }
 }
