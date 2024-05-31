@@ -37,14 +37,30 @@ public class ModelConverter {
      * @return the converted ClothingModel with fields mapped from clothing
      */
     public ClothingModel toClothingModel(Clothing clothing) {
+        String category = null;
+        if (clothing.getCategory() != null) {
+            category = clothing.getCategory();
+        }
+        String fit = null;
+        if (clothing.getFit() != null) {
+            fit = clothing.getFit();
+        }
+        String occasion = null;
+        if (clothing.getOccasion() != null) {
+            occasion = clothing.getOccasion();
+        }
+        String weather = null;
+        if (clothing.getWeather() != null) {
+            weather = clothing.getWeather();
+        }
         return ClothingModel.builder()
                 .withClothingId(clothing.getClothingId())
-                .withCategory(clothing.getCategory())
+                .withCategory(category)
                 .withColor(clothing.getColor())
-                .withFit(clothing.getFit())
+                .withFit(fit)
                 .withLength(clothing.getLength())
-                .withOccasion(clothing.getOccasion())
-                .withWeather(clothing.getWeather())
+                .withOccasion(occasion)
+                .withWeather(weather)
                 .withWornCount(clothing.getWornCount())
                 .build();
     }
