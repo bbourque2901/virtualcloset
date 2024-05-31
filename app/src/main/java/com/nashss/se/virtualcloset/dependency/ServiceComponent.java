@@ -1,6 +1,10 @@
 package com.nashss.se.virtualcloset.dependency;
 
-import com.nashss.se.virtualcloset.activity.*;
+import com.nashss.se.virtualcloset.activity.AddClothingToOutfitActivity;
+import com.nashss.se.virtualcloset.activity.CreateOutfitActivity;
+import com.nashss.se.virtualcloset.activity.GetClothingFromOutfitActivity;
+import com.nashss.se.virtualcloset.activity.GetOutfitActivity;
+import com.nashss.se.virtualcloset.activity.UpdateOutfitActivity;
 
 import dagger.Component;
 
