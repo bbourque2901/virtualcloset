@@ -4,6 +4,7 @@ import com.nashss.se.virtualcloset.activity.AddClothingToOutfitActivity;
 import com.nashss.se.virtualcloset.activity.CreateOutfitActivity;
 import com.nashss.se.virtualcloset.activity.GetClothingFromOutfitActivity;
 import com.nashss.se.virtualcloset.activity.GetOutfitActivity;
+import com.nashss.se.virtualcloset.activity.GetUserOutfitsActivity;
 import com.nashss.se.virtualcloset.activity.UpdateOutfitActivity;
 
 import dagger.Component;
@@ -43,6 +44,12 @@ public interface ServiceComponent {
      * @return GetClothingFromOutfitActivity
      */
     GetClothingFromOutfitActivity provideGetClothingFromOutfitActivity();
+
+    /**
+     * Creates the relevant activity.
+     * @return GetUserOutfitsActivity
+     */
+    GetUserOutfitsActivity provideGetUserOutfitsActivity();
 }
 
 
