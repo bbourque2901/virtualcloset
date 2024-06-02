@@ -1,20 +1,19 @@
 package com.nashss.se.virtualcloset.dynamodb;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.nashss.se.virtualcloset.exceptions.OutfitNotFoundException;
+import com.nashss.se.virtualcloset.exceptions.UserNotFoundException;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 
-import com.nashss.se.virtualcloset.exceptions.UserNotFoundException;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Accesses data for an outfit using {@link Outfit} to represent the model in DynamoDB.
