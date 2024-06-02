@@ -341,7 +341,7 @@ Resources:
         BookTrackerService:
           Type: Api
           Properties:
-            Path: /outfits/{customerId}
+            Path: /userOutfits
             Method: get
 
   #-----------------------------------------------------
