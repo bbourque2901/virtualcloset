@@ -80,4 +80,19 @@ public class ModelConverter {
 
         return clothingModels;
     }
+
+    /**
+     * Converts a list of outfits to a list of outfitmodels.
+     *
+     * @param outfits the outfits to convert
+     * @return the converted list of outfits
+     */
+    public List<OutfitModel> toOutfitModelList(List<Outfit> outfits) {
+        List<OutfitModel> outfitModels = new ArrayList<>();
+
+        for (Outfit outfit : outfits) {
+            outfitModels.add(toOutfitModel(outfit));
+        }
+        return outfitModels;
+    }
 }

@@ -1,12 +1,21 @@
 package com.nashss.se.virtualcloset.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import com.nashss.se.virtualcloset.exceptions.OutfitNotFoundException;
+import com.nashss.se.virtualcloset.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -15,6 +24,10 @@ class OutfitDaoTest {
     @Mock
     private DynamoDBMapper dynamoDBMapper;
     private OutfitDao outfitDao;
+    @Mock
+    private PaginatedScanList<Outfit> scanList;
+    @Captor
+    ArgumentCaptor<DynamoDBScanExpression> scanExpressionArgumentCaptor;
 
     @BeforeEach
     public void setUp() {
@@ -57,5 +70,31 @@ class OutfitDaoTest {
         //THEN
         verify(dynamoDBMapper).save(outfit);
         assertEquals(outfit, result);
+    }
+
+    @Test
+    public void getAllOutfitsForUser_withCustomerId_returnsListofOutfits() {
+        //GIVEN
+        String id = "id";
+        when(dynamoDBMapper.scan(eq(Outfit.class), any(DynamoDBScanExpression.class))).thenReturn(scanList);
+
+        //WHEN
+        List<Outfit> results = outfitDao.getAllOutfitsForUser(id);
+
+        //THEN
+        assertNotNull(results);
+        verify(dynamoDBMapper).scan(eq(Outfit.class), scanExpressionArgumentCaptor.capture());
+        assertTrue(!results.isEmpty());
+    }
+
+    @Test
+    public void getAllOutfitsForUser_withNullId_throwsUserNotFoundException() {
+        //GIVEN
+        String id = null;
+
+        when(dynamoDBMapper.scan(eq(Outfit.class), any(DynamoDBScanExpression.class))).thenReturn(scanList);
+
+        //WHEN + THEN
+        assertThrows(UserNotFoundException.class, () -> outfitDao.getAllOutfitsForUser(id));
     }
 }

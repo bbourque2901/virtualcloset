@@ -73,7 +73,7 @@ U10. As a user, I want to be able to keep track of how many times I’ve worn an
 ## View All Created Outfits Endpoint
 
 - Accepts GET requests to /outfits/:customerId
-- Authentication not needed
+- Authentication needed
 - Accepts a customer ID and returns a list of OutfitModels created by that customer
   - If the given customer has not created any playlists, an empty list will be returned
 
