@@ -12,6 +12,7 @@ import com.nashss.se.virtualcloset.models.ClothingModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -51,7 +52,7 @@ public class DeleteClothingFromOutfitActivity {
 
         Clothing deletedClothing = clothingDao.getClothing(deleteClothingRequest.getClothingId());
 
-        List<Clothing> clothing = outfit.getClothingItems();
+        List<Clothing> clothing = new ArrayList<>(outfit.getClothingItems());
         clothing.remove(deletedClothing);
 
         outfit.setClothingItems(clothing);
