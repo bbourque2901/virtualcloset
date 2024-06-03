@@ -89,5 +89,23 @@ public class OutfitDao {
 
         return this.dynamoDBMapper.scan(Outfit.class, dynamoDBScanExpression);
     }
+
+    /**
+     * Removes the outfit corresponding to the specified id
+     *
+     * @param id the outfit id
+     * @return the removed outfit, or null if none was found
+     */
+    public Outfit removeOutfit(String id) {
+        Outfit outfit = this.dynamoDBMapper.load(Outfit.class, id);
+
+        if (outfit == null) {
+            throw new OutfitNotFoundException("Could not find outfit with id " + id);
+        }
+
+        dynamoDBMapper.delete(outfit);
+
+        return outfit;
+    }
 }
 
