@@ -91,7 +91,7 @@ public class OutfitDao {
     }
 
     /**
-     * Removes the outfit corresponding to the specified id
+     * Removes the outfit corresponding to the specified id.
      *
      * @param id the outfit id
      * @return the removed outfit, or null if none was found
