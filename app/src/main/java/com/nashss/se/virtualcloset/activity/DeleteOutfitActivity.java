@@ -40,15 +40,17 @@ public class DeleteOutfitActivity {
 
         Outfit outfit = outfitDao.removeOutfit(requestedId);
 
-        OutfitModel outfitModel = null;
         if (outfit == null) {
-            log.info("Outfit with id {} not found", requestedId);
-        } else {
-            outfitModel = new ModelConverter().toOutfitModel(outfit);
+            log.warn("Outfit with id {} not found or already deleted", requestedId);
+            return DeleteOutfitResult.builder()
+                    .withMessage("Outfit not found or already deleted")
+                    .build();
         }
+        OutfitModel outfitModel = new ModelConverter().toOutfitModel(outfit);
 
         return DeleteOutfitResult.builder()
                 .withOutfit(outfitModel)
+                .withMessage("Outfit successfully deleted")
                 .build();
     }
 }
