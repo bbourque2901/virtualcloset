@@ -364,6 +364,26 @@ Resources:
             Path: /outfits/{id}/clothing/{clothingId}
             Method: delete
 
+  DeleteOutfitLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: app
+      Handler: com.nashss.se.virtualcloset.lambda.DeleteOutfitLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        BookTrackerService:
+          Type: Api
+          Properties:
+            Path: /outfits/{id}
+            Method: delete
+
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------
