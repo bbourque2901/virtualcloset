@@ -1,6 +1,5 @@
 package com.nashss.se.virtualcloset.activity.results;
 
-import com.nashss.se.virtualcloset.activity.requests.DeleteOutfitRequest;
 import com.nashss.se.virtualcloset.models.OutfitModel;
 
 public class DeleteOutfitResult {
