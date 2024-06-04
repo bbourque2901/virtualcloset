@@ -7,6 +7,7 @@ import com.nashss.se.virtualcloset.dynamodb.Clothing;
 import com.nashss.se.virtualcloset.dynamodb.ClothingDao;
 
 import com.nashss.se.virtualcloset.models.ClothingModel;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

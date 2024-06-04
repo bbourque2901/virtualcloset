@@ -12,13 +12,13 @@ public class GetSortedClothingLambda
     @Override
     public LambdaResponse handleRequest(LambdaRequest<GetSortedClothingRequest> input, Context context) {
         return super.runActivity(
-                () -> input.fromQuery(query ->
-                        GetSortedClothingRequest.builder()
-                                .withCustomerId(query.get("customerId"))
-                                .withAscending(Boolean.parseBoolean(query.get("ascending")))
-                                .build()),
-                (request, serviceComponent) ->
-                        serviceComponent.provideGetSortedClothingActivity().handleRequest(request)
+            () -> input.fromQuery(query ->
+                    GetSortedClothingRequest.builder()
+                            .withCustomerId(query.get("customerId"))
+                            .withAscending(Boolean.parseBoolean(query.get("ascending")))
+                            .build()),
+            (request, serviceComponent) ->
+                    serviceComponent.provideGetSortedClothingActivity().handleRequest(request)
         );
     }
 }
