@@ -45,6 +45,13 @@ U10. As a user, I want to be able to keep track of how many times I’ve worn an
 - Accepts data to create a new outfit with a provided name, a given customer ID, and an optional list of tags. Returns the new outfit, including a unique outfit ID
   - If the outfit contains any invalid characters, it will throw an InvalidAttributeValueException
 
+## Create Clothing Endpoint
+
+- Accepts POST requests to /clothing
+- Authentication needed
+- Accepts data to create a new clothing item with a given customerID, a provided color, length, and optional category, fit, occasion, and weather. Returns the new clothing item, including a unique outfit ID
+  - If the clothing item contains any invalid characters, it will throw an InvalidAttributeValueException
+
 ## Update Outfit Endpoint
 
 - Accepts PUT requests to /outfits/:id

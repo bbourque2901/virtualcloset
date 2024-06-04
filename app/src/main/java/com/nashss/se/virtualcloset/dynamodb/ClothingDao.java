@@ -5,6 +5,7 @@ import com.nashss.se.virtualcloset.exceptions.ClothingNotFoundException;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -61,5 +62,27 @@ public class ClothingDao {
                 .withConsistentRead(false);
 
         return dynamoDBMapper.query(Clothing.class, queryExpression);
+    }
+
+    /**
+     * Checks if outfit attributes are valid.
+     *
+     * @param string String to check for invalid characters.
+     * @return if outfit attributes are valid.
+     */
+    public static boolean isValidString(String string) {
+        String validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ -@+ 1234567890.";
+        return StringUtils.containsOnly(string, validChars);
+    }
+
+    /**
+     * Saves the given clothing item.
+     *
+     * @param clothing The clothing item to save
+     * @return The Clothing object that was saved
+     */
+    public Clothing saveClothing(Clothing clothing) {
+        this.dynamoDBMapper.save(clothing);
+        return clothing;
     }
 }
