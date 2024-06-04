@@ -1,6 +1,7 @@
 package com.nashss.se.virtualcloset.dependency;
 
 import com.nashss.se.virtualcloset.activity.AddClothingToOutfitActivity;
+import com.nashss.se.virtualcloset.activity.CreateClothingActivity;
 import com.nashss.se.virtualcloset.activity.CreateOutfitActivity;
 import com.nashss.se.virtualcloset.activity.DeleteClothingFromOutfitActivity;
 import com.nashss.se.virtualcloset.activity.DeleteOutfitActivity;
@@ -78,6 +79,12 @@ public interface ServiceComponent {
      * @return GetSortedClothingActivity
      */
     GetSortedClothingActivity provideGetSortedClothingActivity();
+
+    /**
+     * Creates the relevant activity.
+     * @return CreateClothingActivity
+     */
+    CreateClothingActivity provideCreateClothingActivity();
 }
 
 
