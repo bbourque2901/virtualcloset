@@ -55,6 +55,7 @@ public class ModelConverter {
         }
         return ClothingModel.builder()
                 .withClothingId(clothing.getClothingId())
+                .withCustomerId(clothing.getCustomerId())
                 .withCategory(category)
                 .withColor(clothing.getColor())
                 .withFit(fit)

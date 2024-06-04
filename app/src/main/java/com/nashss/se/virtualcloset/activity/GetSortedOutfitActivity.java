@@ -14,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 public class GetSortedOutfitActivity {
@@ -44,9 +43,7 @@ public class GetSortedOutfitActivity {
         boolean ascending = request.isAscending();
 
         List<Outfit> outfits = outfitDao.getOutfitsSortedByWornCount(customerId, ascending);
-        List<OutfitModel> outfitModels = outfits.stream()
-                .map(outfit -> new ModelConverter().toOutfitModel(outfit))
-                .collect(Collectors.toList());
+        List<OutfitModel> outfitModels = new ModelConverter().toOutfitModelList(outfits);
 
         return GetSortedOutfitResult.builder()
                 .withOutfits(outfitModels)

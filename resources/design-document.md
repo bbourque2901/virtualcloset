@@ -102,11 +102,9 @@ U10. As a user, I want to be able to keep track of how many times I’ve worn an
 
 ## Track Times Worn of a Clothing Item Endpoint
 
-- Accepts POST requests to /clothing/:clothingID/worn
-- Authentication needed
-- Accepts clothing Id of the worn clothing item
-- Returns the updated clothing item with the incremented worn count
-  - If the clothing item ID isn’t found, it throws a ClothingItemNotFoundException
+- Accepts GET requests to /clothing
+- Accepts the customer ID
+- Returns the sorted clothing list
 
 # Tables 
 
@@ -125,8 +123,9 @@ wornCount // number, outfits-worncount-index sort key
 ```
 //clothing
 clothingId // partition key, string
-wornCount // number, CategoryWornCountIndex sort key
-category // string , CategoryWornCountIndex partition key
+customerId // string, ClothingWornCountIndex partition key
+wornCount // number, ClothingWornCountIndex sort key
+category // string
 color // string
 fit // string
 length // string

@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public class ClothingModel {
     private final String clothingId;
+    private final String customerId;
     private final int wornCount;
     private final String category;
     private final String color;
@@ -12,9 +13,10 @@ public class ClothingModel {
     private final String weather;
     private final String occasion;
 
-    private ClothingModel(String clothingId, int wornCount, String category, String color,
+    private ClothingModel(String clothingId, String customerId, int wornCount, String category, String color,
                           String fit, String length, String weather, String occasion) {
         this.clothingId = clothingId;
+        this.customerId = customerId;
         this.wornCount = wornCount;
         this.category = category;
         this.color = color;
@@ -26,6 +28,10 @@ public class ClothingModel {
 
     public String getClothingId() {
         return clothingId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
     }
 
     public int getWornCount() {
@@ -67,6 +73,7 @@ public class ClothingModel {
         ClothingModel that = (ClothingModel) o;
         return wornCount == that.wornCount &&
                 Objects.equals(clothingId, that.clothingId) &&
+                Objects.equals(customerId, that.customerId) &&
                 Objects.equals(category, that.category) &&
                 Objects.equals(color, that.color) &&
                 Objects.equals(fit, that.fit) &&
@@ -77,7 +84,7 @@ public class ClothingModel {
 
     @Override
     public int hashCode() {
-        return Objects.hash(clothingId, wornCount, category, color, fit, length, weather, occasion);
+        return Objects.hash(clothingId, customerId, wornCount, category, color, fit, length, weather, occasion);
     }
 
     //CHECKSTYLE:OFF:Builder
@@ -87,6 +94,7 @@ public class ClothingModel {
 
     public static class Builder {
         private String clothingId;
+        private String customerId;
         private int wornCount;
         private String category;
         private String color;
@@ -97,6 +105,11 @@ public class ClothingModel {
 
         public Builder withClothingId(String clothingId) {
             this.clothingId = clothingId;
+            return this;
+        }
+
+        public Builder withCustomerId(String customerId) {
+            this.customerId = customerId;
             return this;
         }
 
@@ -136,7 +149,7 @@ public class ClothingModel {
         }
 
         public ClothingModel build() {
-            return new ClothingModel(clothingId, wornCount, category, color, fit, length, weather, occasion);
+            return new ClothingModel(clothingId, customerId, wornCount, category, color, fit, length, weather, occasion);
         }
     }
 }
