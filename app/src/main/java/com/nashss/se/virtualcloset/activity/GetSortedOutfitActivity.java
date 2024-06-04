@@ -44,9 +44,7 @@ public class GetSortedOutfitActivity {
         boolean ascending = request.isAscending();
 
         List<Outfit> outfits = outfitDao.getOutfitsSortedByWornCount(customerId, ascending);
-        List<OutfitModel> outfitModels = outfits.stream()
-                .map(outfit -> new ModelConverter().toOutfitModel(outfit))
-                .collect(Collectors.toList());
+        List<OutfitModel> outfitModels = new ModelConverter().toOutfitModelList(outfits);
 
         return GetSortedOutfitResult.builder()
                 .withOutfits(outfitModels)
