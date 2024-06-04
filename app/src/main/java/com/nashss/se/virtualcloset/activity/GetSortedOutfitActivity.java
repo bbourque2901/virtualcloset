@@ -1,18 +1,21 @@
 package com.nashss.se.virtualcloset.activity;
 
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import com.nashss.se.virtualcloset.activity.requests.GetSortedOutfitRequest;
 import com.nashss.se.virtualcloset.activity.results.GetSortedOutfitResult;
+
 import com.nashss.se.virtualcloset.converters.ModelConverter;
+
 import com.nashss.se.virtualcloset.dynamodb.Outfit;
 import com.nashss.se.virtualcloset.dynamodb.OutfitDao;
+
 import com.nashss.se.virtualcloset.models.OutfitModel;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 
 public class GetSortedOutfitActivity {
     private final Logger log = LogManager.getLogger();

@@ -1,7 +1,13 @@
 package com.nashss.se.virtualcloset.dynamodb;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.nashss.se.virtualcloset.converters.ClothingLinkedListConverter;
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
 import java.util.ArrayList;
 import java.util.HashSet;
