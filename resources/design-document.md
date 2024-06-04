@@ -125,8 +125,9 @@ wornCount // number, outfits-worncount-index sort key
 ```
 //clothing
 clothingId // partition key, string
-wornCount // number, CategoryWornCountIndex sort key
-category // string , CategoryWornCountIndex partition key
+customerId // string, ClothingWornCountIndex partition key
+wornCount // number, ClothingWornCountIndex sort key
+category // string
 color // string
 fit // string
 length // string
