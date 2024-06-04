@@ -70,6 +70,8 @@ public class CreateClothingActivity {
         newClothing.setFit(fit);
         newClothing.setOccasion(occasion);
         newClothing.setWeather(weather);
+        newClothing.setColor(createClothingRequest.getColor());
+        newClothing.setLength(createClothingRequest.getLength());
 
         clothingDao.saveClothing(newClothing);
 
