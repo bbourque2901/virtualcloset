@@ -1,11 +1,7 @@
 package com.nashss.se.virtualcloset.dynamodb;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.nashss.se.virtualcloset.converters.ClothingLinkedListConverter;
-
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,7 +36,7 @@ public class Outfit {
         this.name = name;
     }
 
-    @DynamoDBAttribute(attributeName = "customerId")
+    @DynamoDBIndexHashKey(attributeName = "customerId", globalSecondaryIndexName = "outfit-worncount")
     public String getCustomerId() {
         return customerId;
     }
@@ -92,7 +88,7 @@ public class Outfit {
         this.clothingItems = clothingItems;
     }
 
-    @DynamoDBAttribute(attributeName = "wornCount")
+    @DynamoDBIndexRangeKey(attributeName = "wornCount", globalSecondaryIndexName = "outfit-worncount")
     public Integer getWornCount() {
         return wornCount;
     }

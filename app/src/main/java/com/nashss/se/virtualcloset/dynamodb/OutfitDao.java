@@ -1,5 +1,6 @@
 package com.nashss.se.virtualcloset.dynamodb;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.nashss.se.virtualcloset.exceptions.OutfitNotFoundException;
 import com.nashss.se.virtualcloset.exceptions.UserNotFoundException;
 
@@ -106,6 +107,28 @@ public class OutfitDao {
         dynamoDBMapper.delete(outfit);
 
         return outfit;
+    }
+
+    /**
+     * Sorts outfits by worncount.
+     *
+     * @param customerId the customerId of the individual sorting their outfits.
+     * @param ascending order outfits are displayed in.
+     * @return the sorted list of outfits.
+     */
+    public List<Outfit> getOutfitsSortedByWornCount(String customerId, boolean ascending) {
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":customerId", new AttributeValue().withS(customerId));
+
+        DynamoDBQueryExpression<Outfit> queryExpression = new DynamoDBQueryExpression<Outfit>()
+                .withKeyConditionExpression("customerId = :customerId")
+                .withExpressionAttributeValues(valueMap)
+                .withIndexName("outfit-worncount")
+                .withScanIndexForward(ascending)
+                .withConsistentRead(false);
+
+        return dynamoDBMapper.query(Outfit.class, queryExpression);
+
     }
 }
 
