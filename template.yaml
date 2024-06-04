@@ -406,6 +406,28 @@ Resources:
             Auth:
               Authorizer: 'NONE'
 
+  GetSortedClothingLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: app
+      Handler: com.nashss.se.virtualcloset.lambda.GetSortedClothingLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        VirtualCloset:
+          Type: Api
+          Properties:
+            Path: /clothing
+            Method: get
+            Auth:
+              Authorizer: 'NONE'
+
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------
@@ -441,9 +463,22 @@ Resources:
       AttributeDefinitions:
         - AttributeName: "clothingId"
           AttributeType: "S"
+        - AttributeName: "customerId"
+          AttributeType: "S"
+        - AttributeName: "wornCount"
+          AttributeType: "N"
       KeySchema:
         - AttributeName: "clothingId"
           KeyType: "HASH"
+      GlobalSecondaryIndexes:
+        - IndexName: "clothing-worncount-index"
+          KeySchema:
+            - AttributeName: "customerId"
+              KeyType: "HASH"
+            - AttributeName: "wornCount"
+              KeyType: "RANGE"
+          Projection:
+            ProjectionType: "ALL"
       BillingMode: "PAY_PER_REQUEST"
       TableName: "clothing"
 
