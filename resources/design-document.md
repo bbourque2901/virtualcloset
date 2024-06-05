@@ -20,6 +20,8 @@ U7. As a user, I want to be able to remove clothing items from my outfit.
 U8. As a user, I want to be able to remove an entire outfit.
 U9. As a user, I want to be able to keep track of how many times I’ve worn an outfit
 U10. As a user, I want to be able to keep track of how many times I’ve worn an article of clothing
+U11. As a user, I want to create a new clothing item.
+U12. As a user, I want to retrieve my clothing item with a given ID.
 
 ## Stretch Goals
 
@@ -37,6 +39,13 @@ U10. As a user, I want to be able to keep track of how many times I’ve worn an
 - Authentication not needed
 - Accepts an outfit ID and returns a corresponding outfit model
   - If the given outfit ID isn’t found, it will throw an OutfitNotFoundException
+
+## Get Clothing Endpoint
+
+- Accepts GET requests to /clothing/:clothingId
+- Authentication not needed
+- Accepts an clothing ID and returns a corresponding clothing model
+  - If the given clothing ID isn’t found, it will throw an ClothingNotFoundException
 
 ## Create Outfit Endpoint
 

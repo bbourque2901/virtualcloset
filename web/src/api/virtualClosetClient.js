@@ -99,6 +99,47 @@ export default class virtualClosetClient extends BindingClass {
     }
 
     /**
+     * Create a new clothing item owned by the current user.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The clothing item that has been created.
+     */
+    async createClothing(category, color, fit, length, occasion, weather, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can create clothing.");
+            const response = await this.axiosClient.post(`clothing`, {
+                category: category,
+                color: color, 
+                fit: fit, 
+                length: length,
+                occasion: occasion,
+                weather: weather
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.clothing;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Gets the clothing item for the given clothingID.
+     * @param clothingId Unique identifier for an outfit
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The clothing's metadata.
+     */
+    async getClothing(clothingId, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`clothing/${clothingId}`);
+            return response.data.clothing;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
      * Helper method to log the error and run any error functions.
      * @param error The error received from the server.
      * @param errorCallback (Optional) A function to execute if the call fails.

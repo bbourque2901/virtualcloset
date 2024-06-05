@@ -25,13 +25,13 @@ class ViewOutfit extends BindingClass {
     document.getElementById('outfit-name').innerText = "Loading Outfit ...";
     const outfit = await this.client.getOutfit(outfitId);
     this.dataStore.set('outfit', outfit);
-    //document.getElementById('clothing').innerText = "(loading clothing...)";
-   // const clothing = await this.client.getOutfitClothes(outfitId);
-    //this.dataStore.set('clothing', clothing);
+    document.getElementById('clothing').innerText = "(loading clothing...)";
+    const clothing = await this.client.getOutfitClothes(outfitId);
+    this.dataStore.set('clothing', clothing);
 }
 
 mount() {
-    //document.getElementById('add-clothing').addEventListener('click', this.addClothing);
+    document.getElementById('add-clothing').addEventListener('click', this.addClothing);
 
     this.header.addHeaderToPage();
 
