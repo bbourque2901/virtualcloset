@@ -12,12 +12,12 @@ public class GetClothingLambda
     @Override
     public LambdaResponse handleRequest(LambdaRequest<GetClothingRequest> input, Context context) {
         return super.runActivity(
-                () -> input.fromPath(path ->
-                        GetClothingRequest.builder()
-                                .withClothingId(path.get("clothingId"))
-                                .build()),
-                (request, serviceComponent) ->
-                        serviceComponent.provideGetClothingActivity().handleRequest(request)
+            () -> input.fromPath(path ->
+                    GetClothingRequest.builder()
+                            .withClothingId(path.get("clothingId"))
+                            .build()),
+            (request, serviceComponent) ->
+                    serviceComponent.provideGetClothingActivity().handleRequest(request)
         );
     }
 }
