@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="assets/createClothing.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body class="background">
+    <header class="header" id="header"></header>
+    <div class="card">
+        <h2>Create your clothing item!</h2>
+        <form class="card-content" id="create-outfit-form">
+            <p class="hidden error" id="error-message"> </p>
+            <p class="form-field">
+                <label>Category</label>
+                <input type="text" class="category" id="clothing-category" placeholder="shirt"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Color</label>
+                <input type="text" required class="validated-field" id="clothing-color" placeholder="blue"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Fit</label>
+                <input type="text" class="fit" id="clothing-fit" placeholder="loose fitting"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Length</label>
+                <input type="text" required class="validated-field" id="clothing-length" placeholder="short"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Occasion</label>
+                <input type="text" class="occasion" id="clothing-occasion" placeholder="beach"
+                    autofocus>
+            </p>
+            <p class="form-field">
+                <label>Weather</label>
+                <input type="text" class="weather" id="clothing-weather" placeholder="hot"
+                    autofocus>
+            </p>
+            <p>
+                <a href="#" class="button" id="create">Create Clothing Item</a>
+            </p>
+        </form>
+    </div>
+</body>
+
+</html>
