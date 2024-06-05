@@ -26,7 +26,7 @@ public class GetClothingRequest {
     public static class Builder {
         private String clothingId;
 
-        public Builder withCustomerId(String clothingId) {
+        public Builder withClothingId(String clothingId) {
             this.clothingId = clothingId;
             return this;
         }
