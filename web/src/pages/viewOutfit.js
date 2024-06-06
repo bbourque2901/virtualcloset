@@ -59,6 +59,29 @@ addOutfitToPage() {
     document.getElementById('tags').innerHTML = tagHtml;
 }
 
+/**
+     * When the clothes are updated in the datastore, update the list of clothes on the page.
+     */
+addClothesToPage() {
+    const clothes = this.dataStore.get('clothing')
+
+    if (clothes == null) {
+        return;
+    }
+
+    let clothingHtml = '';
+    let clothing;
+    for (clothing of clothes) {
+        clothingHtml += `
+            <li class="clothing">
+                <span class="title">${clothing.title}</span>
+                <span class="album">${clothing.album}</span>
+            </li>
+        `;
+    }
+    document.getElementById('clothes').innerHTML = clothesHtml;
+}
+
 }
 
 /**

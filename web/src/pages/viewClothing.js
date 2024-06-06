@@ -9,7 +9,7 @@ import DataStore from "../util/DataStore";
 class ViewClothing extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'addClothingToPage'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'addClothingToPage', 'redirectToAllClothing'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.addClothingToPage);
         this.header = new Header(this.dataStore);
@@ -51,6 +51,13 @@ addClothingToPage() {
     document.getElementById('clothing-length').innerText = clothing.length;
     document.getElementById('clothing-occasion').innerText = clothing.occasion;
     document.getElementById('clothing-weather').innerText = clothing.weather;
+}
+
+/**
+     * Redirect to the all clothing items page.
+     */
+redirectToAllClothing() {
+    window.location.href = '/allClothing.html';
 }
 
 }
