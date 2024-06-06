@@ -11,7 +11,7 @@ export default class virtualClosetClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing', 'createClothing', 'getOutfitClothes'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -134,6 +134,21 @@ export default class virtualClosetClient extends BindingClass {
         try {
             const response = await this.axiosClient.get(`clothing/${clothingId}`);
             return response.data.clothing;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Get the clothing items on a given outfit by the outfit's identifier.
+     * @param id Unique identifier for an outfit
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The list of clothes in an outfit.
+     */
+    async getOutfitClothes(id, errorCallback) {
+        try {
+            const response = await this.axiosClient.get(`outfits/${id}/clothing`);
+            return response.data.songList;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

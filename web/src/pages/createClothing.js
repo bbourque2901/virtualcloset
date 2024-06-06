@@ -50,7 +50,7 @@ class CreateClothing extends BindingClass {
     redirectToViewClothing() {
         const clothing = this.dataStore.get('clothing');
         if (clothing != null) {
-            window.location.href = `/clothing.html?id=${clothing.id}`;
+            window.location.href = `/clothing.html?clothingId=${clothing.clothingId}`;
         }
     }
 }

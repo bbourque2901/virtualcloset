@@ -31,7 +31,7 @@ class ViewOutfit extends BindingClass {
 }
 
 mount() {
-    document.getElementById('add-clothing').addEventListener('click', this.addClothing);
+    //document.getElementById('add-clothing').addEventListener('click', this.addClothing);
 
     this.header.addHeaderToPage();
 
@@ -57,6 +57,29 @@ addOutfitToPage() {
         tagHtml += '<div class="tag">' + tag + '</div>';
     }
     document.getElementById('tags').innerHTML = tagHtml;
+}
+
+/**
+     * When the clothes are updated in the datastore, update the list of clothes on the page.
+     */
+addClothesToPage() {
+    const clothes = this.dataStore.get('clothing')
+
+    if (clothes == null) {
+        return;
+    }
+
+    let clothingHtml = '';
+    let clothing;
+    for (clothing of clothes) {
+        clothingHtml += `
+            <li class="clothing">
+                <span class="title">${clothing.title}</span>
+                <span class="album">${clothing.album}</span>
+            </li>
+        `;
+    }
+    document.getElementById('clothes').innerHTML = clothesHtml;
 }
 
 }
