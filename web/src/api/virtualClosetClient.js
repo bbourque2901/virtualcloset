@@ -11,7 +11,7 @@ export default class virtualClosetClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing', 'createClothing', 'getOutfitClothes'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing', 'createClothing', 'getOutfitClothes', 'addClothingToOutfit'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -149,6 +149,29 @@ export default class virtualClosetClient extends BindingClass {
         try {
             const response = await this.axiosClient.get(`outfits/${id}/clothing`);
             return response.data.songList;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Add clothing to an outfit.
+     * @param id The id of the outfit to add clothing to.
+     * @param clothingId the clothingId of the clothing item being added
+     * @returns The list of clothing in an outfit.
+     */
+    async addClothingToOutfit(id, clothingId,errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can add clothing to an outfit.");
+            const response = await this.axiosClient.post(`outfits/${id}/clothing`, {
+                id: id,
+                clothingId: clothingId
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.clothingList;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

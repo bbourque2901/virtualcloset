@@ -9,7 +9,7 @@ import DataStore from "../util/DataStore";
 class ViewOutfit extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage', 'addClothingToPage', 'addClothingToOutfit'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.addOutfitToPage);
         this.header = new Header(this.dataStore);
@@ -31,12 +31,14 @@ class ViewOutfit extends BindingClass {
 }
 
 mount() {
-    //document.getElementById('add-clothing').addEventListener('click', this.addClothing);
-
     this.header.addHeaderToPage();
 
     this.client = new VirtualClosetClient();
     this.clientLoaded();
+
+    document.getElementById('add-clothing').addEventListener('click', () => {
+        window.location.href = 'addClothingToOutfit.html';
+    });
 }
 
 /**
@@ -60,27 +62,67 @@ addOutfitToPage() {
 }
 
 /**
-     * When the clothes are updated in the datastore, update the list of clothes on the page.
-     */
-addClothesToPage() {
-    const clothes = this.dataStore.get('clothing')
+ * When the clothing items are updated in the datastore, update the list of clothing items on the page.
+ */
+addClothingToPage() {
+    const clothingItems = this.dataStore.get('clothingItems');
 
-    if (clothes == null) {
+    if (clothingItems == null) {
         return;
     }
 
     let clothingHtml = '';
-    let clothing;
-    for (clothing of clothes) {
+    let item;
+    for (item of clothingItems) {
         clothingHtml += `
-            <li class="clothing">
-                <span class="title">${clothing.title}</span>
-                <span class="album">${clothing.album}</span>
+            <li class="clothing-item">
+                <span class="category">${item.category}</span>
+                <span class="color">${item.color}</span>
+                <span class="fit">${item.fit}</span>
+                <span class="length">${item.length}</span>
+                <span class="occasion">${item.occasion}</span>
+                <span class="weather">${item.weather}</span>
             </li>
         `;
     }
-    document.getElementById('clothes').innerHTML = clothesHtml;
+    document.getElementById('clothing-items').innerHTML = clothingHtml;
 }
+
+/**
+ * Method to run when the add clothing to outfit submit button is pressed. Call the VirtualClosetClient to add a clothing item to the
+ * outfit.
+ */
+async addClothingToOutfit() {
+
+    const errorMessageDisplay = document.getElementById('error-message');
+    errorMessageDisplay.innerText = ``;
+    errorMessageDisplay.classList.add('hidden');
+
+    const outfit = this.dataStore.get('outfit');
+    if (outfit == null) {
+        return;
+    }
+
+    document.getElementById('add-clothing').innerText = 'Adding...';
+    const category = document.getElementById('clothing-category').value;
+    const color = document.getElementById('clothing-color').value;
+    const fit = document.getElementById('clothing-fit').value;
+    const length = document.getElementById('clothing-length').value;
+    const occasion = document.getElementById('clothing-occasion').value;
+    const weather = document.getElementById('clothing-weather').value;
+    const outfitId = outfit.id;
+
+    const clothingList = await this.client.addClothingToOutfit(outfitId, category, color, fit, length, occasion, weather, (error) => {
+        errorMessageDisplay.innerText = `Error: ${error.message}`;
+        errorMessageDisplay.classList.remove('hidden');           
+    });
+
+    this.dataStore.set('clothingItems', clothingList);
+
+    document.getElementById('add-clothing').innerText = 'Add Clothing';
+    document.getElementById("add-clothing-form").reset();
+}
+
 
 }
 
