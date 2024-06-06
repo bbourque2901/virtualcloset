@@ -11,7 +11,7 @@ export default class virtualClosetClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing', 'createClothing'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
