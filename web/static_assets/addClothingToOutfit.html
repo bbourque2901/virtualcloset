@@ -2,16 +2,22 @@
 <html>
 
 <head>
-    <script type="text/javascript" src="assets/addClothingToOutfit.js"></script>
+    <script type="text/javascript" src="assets/viewOutfit.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body class="background">
     <header class="header" id="header"></header>
     <div class="card">
+        <h2 id="outfit-name"></h2>
+        <div id="tags"></div>
+        <ul id="clothing-items"></ul>
+    </div>
+
+    <div class="card">
         <h2>Add New Clothing Item</h2>
         <form class="card-content" id="add-clothing-form">
-            <p class="hidden error" id="error-message"> </p>
+            <p class="hidden error" id="error-message"></p>
             <div class="attribute">
                 <h3>Category:</h3>
                 <input type="text" id="clothing-category" name="category">
@@ -36,11 +42,9 @@
                 <h3>Weather:</h3>
                 <input type="text" id="clothing-weather" name="weather">
             </div>
-            <button type="button" id="submit-clothing">Add Clothing</button>
+            <button type="button" id="add-clothing">Add Clothing</button>
         </form>
     </div>
 </body>
 
 </html>
-
-
