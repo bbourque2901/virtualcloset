@@ -148,7 +148,7 @@ export default class virtualClosetClient extends BindingClass {
     async getOutfitClothes(id, errorCallback) {
         try {
             const response = await this.axiosClient.get(`outfits/${id}/clothing`);
-            return response.data.songList;
+            return response.data.clothingList;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
