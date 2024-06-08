@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <script type="text/javascript" src="assets/viewOutfit.js"></script>
+    <script type="module" src="assets/viewOutfit.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
@@ -10,16 +10,11 @@
     <header class="header" id="header"></header>
     <div class="card">
         <h2 id="outfit-name"></h2>
-        <div class="tags" id="tags"></div>
-        <ol id="clothing"></ol>
+        <div id="tags"></div>
+        <ul id="clothing-items"></ul>
     </div>
     <div class="card">
         <h2>Add Clothes to Outfit</h2>
-        <form class="card-content" id="add-clothing-form">
-            <p class="hidden error" id="error-message"> </p>
-           
-            </p>
-        </form>
         <button class="button" id="add-clothing">Add New Clothing Item</button>
     </div>
 </body>

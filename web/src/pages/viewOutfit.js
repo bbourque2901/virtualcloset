@@ -9,7 +9,7 @@ import DataStore from "../util/DataStore";
 class ViewOutfit extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage', 'addClothingToPage', 'submitClothing', 'redirectToViewOutfit'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage', 'addClothingToPage', 'navigateToAddClothingPage', 'submitClothing'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.addOutfitToPage);
         this.dataStore.addChangeListener(this.addClothingToPage);
@@ -23,12 +23,15 @@ class ViewOutfit extends BindingClass {
     async clientLoaded() {
         const urlParams = new URLSearchParams(window.location.search);
         const outfitId = urlParams.get('id');
-        document.getElementById('outfit-name').innerText = "Loading Outfit ...";
-        const outfit = await this.client.getOutfit(outfitId);
-        this.dataStore.set('outfit', outfit);
-        document.getElementById('clothing').innerText = "(loading clothing...)";
-        const clothing = await this.client.getOutfitClothes(outfitId);
-        this.dataStore.set('clothingItems', clothing);
+        if (outfitId) {
+            document.getElementById('outfit-name').innerText = "Loading Outfit ...";
+            const outfit = await this.client.getOutfit(outfitId);
+            this.dataStore.set('outfit', outfit);
+            const clothing = await this.client.getOutfitClothes(outfitId);
+            this.dataStore.set('clothingItems', clothing);
+        } else {
+            console.error('Outfit ID is missing');
+        }
     }
 
     mount() {
@@ -37,7 +40,13 @@ class ViewOutfit extends BindingClass {
         this.client = new VirtualClosetClient();
         this.clientLoaded();
 
-        document.getElementById('add-clothing').addEventListener('click', this.submitClothing);
+        if (document.getElementById('add-clothing')) {
+            document.getElementById('add-clothing').addEventListener('click', this.navigateToAddClothingPage);
+        }
+
+        if (document.getElementById('submit-clothing')) {
+            document.getElementById('submit-clothing').addEventListener('click', this.submitClothing);
+        }
     }
 
     /**
@@ -64,11 +73,11 @@ class ViewOutfit extends BindingClass {
      */
     addClothingToPage() {
         const clothingItems = this.dataStore.get('clothingItems');
-
+    
         if (clothingItems == null) {
             return;
         }
-
+    
         let clothingHtml = '';
         let item;
         for (item of clothingItems) {
@@ -85,80 +94,60 @@ class ViewOutfit extends BindingClass {
         }
         document.getElementById('clothing-items').innerHTML = clothingHtml;
     }
+    
 
     /**
-     * Handle the form submission to create a new clothing item and add it to an outfit.
+     * Navigate to the add clothing page, including the outfit ID in the URL.
+     */
+    navigateToAddClothingPage() {
+        const outfit = this.dataStore.get('outfit');
+        if (outfit) {
+            window.location.href = `addClothingToOutfit.html?id=${outfit.id}`;
+        }
+    }
+
+    /**
+     * Submit the clothing form and add the clothing item to the outfit.
      */
     async submitClothing(evt) {
-       // evt.preventDefault();
-
+        evt.preventDefault();
+    
+        const urlParams = new URLSearchParams(window.location.search);
+        const outfitId = urlParams.get('id');
+    
         const errorMessageDisplay = document.getElementById('error-message');
         errorMessageDisplay.innerText = '';
         errorMessageDisplay.classList.add('hidden');
-
-        const submitButton = document.getElementById('add-clothing');
+    
+        const submitButton = document.getElementById('submit-clothing');
         const origButtonText = submitButton.innerText;
         submitButton.innerText = 'Loading...';
-
+    
         const category = document.getElementById('clothing-category').value;
         const color = document.getElementById('clothing-color').value;
         const fit = document.getElementById('clothing-fit').value;
         const length = document.getElementById('clothing-length').value;
         const occasion = document.getElementById('clothing-occasion').value;
         const weather = document.getElementById('clothing-weather').value;
-
-        const outfit = this.dataStore.get('outfit');
-        if (!outfit) {
-            errorMessageDisplay.innerText = 'Error: Outfit not found.';
-            errorMessageDisplay.classList.remove('hidden');
-            submitButton.innerText = origButtonText;
-            return;
-        }
-
-        const outfitId = outfit.id;
-        const customerId = outfit.customerId; 
-
-        try {
-            const createClothingRequest = {
-                customerId: customerId,
-                category: category,
-                color: color,
-                fit: fit,
-                length: length,
-                occasion: occasion,
-                weather: weather
-            };
-            const clothing = await this.client.createClothing(createClothingRequest);
-            if (!clothing || !clothing.clothingId) {
+    
+            const clothing = await this.client.createClothing(category, color, fit, length, occasion, weather);
+    
+            if (!clothing) {
                 throw new Error('Failed to create clothing item');
             }
-
-            const clothingList = await this.client.addClothingToOutfit(outfitId, clothing.clothingId, (error) => {
-                errorMessageDisplay.innerText = `Error: ${error.message}`;
-                errorMessageDisplay.classList.remove('hidden');           
-            });
-
+    
+            const clothingList = await this.client.addClothingToOutfit(outfitId, clothing.clothingId);
+    
             this.dataStore.set('clothingItems', clothingList);
-        } catch (error) {
+            window.location.href = `outfit.html?id=${outfitId}`;
+      
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');
+        
             submitButton.innerText = origButtonText;
-            return;
-        }
-
-        submitButton.innerText = origButtonText;
-        this.redirectToViewOutfit();
+        
     }
-
-    /**
-     * Redirect to the view outfit page.
-     */
-    redirectToViewOutfit() {
-        const outfit = this.dataStore.get('outfit');
-        if (outfit) {
-            window.location.href = `viewOutfit.html?id=${outfit.id}`;
-        }
-    }
+    
 }
 
 /**
@@ -170,5 +159,4 @@ const main = async () => {
 };
 
 window.addEventListener('DOMContentLoaded', main);
-
 
