@@ -45,9 +45,9 @@
   cursor: pointer;
 }
 
-.button-group {
-    display: flex;
-    justify-content: space-between;
+.content img {
+    height: 20%;
+    width: 20%;
 }
 
 .container {
@@ -58,12 +58,6 @@
     text-align: center;
 }
 
-.container img {
-    height: 40%;
-    width: 40%;
-    object-fit: contain;
-}
-
 .container .button {
     margin: 0 20px;
     border: none;
@@ -71,6 +65,9 @@
     text-decoration: none;
     font-size: 16px;
     cursor: pointer;
+    display: block;
+    margin-right: 0;
+    margin-bottom: 15px;
 }
 
 .header_home {
@@ -143,16 +140,16 @@
     border-radius: 16px;
 }
 
-.song {
+.clothing {
     padding: 2px;
     display: flex;
 }
 
-.song .title {
+.clothing .title {
     flex: 20%;
 }
 
-.song .album {
+.clothing .album {
     flex: 80%;
 }
 
@@ -161,7 +158,7 @@ Flexbox on a lists removes the numbers. We use a counter here to add them back.
 https://stackoverflow.com/a/34316093
 https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters
 */
-.song:before {
+.clothing:before {
     counter-increment: section;
     content: counter(section) ".";
     position: absolute;
