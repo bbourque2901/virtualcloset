@@ -11,7 +11,8 @@ export default class virtualClosetClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing', 'createClothing', 'getOutfitClothes', 'addClothingToOutfit'];
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing',
+             'createClothing', 'getOutfitClothes', 'addClothingToOutfit', 'getUserOutfits', 'removeOutfit'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -172,6 +173,49 @@ export default class virtualClosetClient extends BindingClass {
                 }
             });
             return response.data.clothingList;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Get the outfits of a given user.
+     * @param customerId Unique identifier for a user
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The list of outfits associated with a user.
+     */
+    async getUserOutfits(customerId, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can view their booklists.");
+            const response = await this.axiosClient.get(`userOutfits`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                  }
+                });
+            return response.data.outfits;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+     /**
+          * removes an outfit.
+          * @param id The id of the outfit.
+          * @returns The list of clothing items in an outfit.
+          */
+     async removeOutfit(id, errorCallback) {
+        try {
+            console.log('delete endpoint called with id ' + id);
+            const token = await this.getTokenOrThrow("Only authenticated users can remove an outfit.");
+            const response = await this.axiosClient.delete(`outfits/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                  },
+                  data: {
+                    id: id
+                  }
+                });
+            return response.data.outfits;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
