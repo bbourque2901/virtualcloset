@@ -48,7 +48,7 @@ import DataStore from "../util/DataStore";
             return;
         }
 
-        let outfitsHtml = '<table id="outfits-table"><tr><th>Name</th><th>Book Count</th><th>Tags</th><th>Booklist Id</th><th>Remove Booklist</th></tr>';
+        let outfitsHtml = '<table id="outfits-table"><tr><th>Name</th><th>Tags</th><th>Remove Outfit</th></tr>';
         let outfit;
         for (outfit of outfits) {
             outfitsHtml += `
@@ -56,9 +56,7 @@ import DataStore from "../util/DataStore";
                 <td>
                     <a href="outfit.html?id=${outfit.id}">${outfit.name}</a>
                 </td>
-                <td>${outfit.bookCount}</td>
                 <td>${outfit.tags?.join(', ')}</td>
-                <td>${outfit.id}</td>
                 <td><button data-id="${outfit.id}" class="button remove-outfit">Remove ${outfit.name}</button></td>
             </tr>`;
         }
