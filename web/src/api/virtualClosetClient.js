@@ -12,7 +12,7 @@ export default class virtualClosetClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing',
-             'createClothing', 'getOutfitClothes', 'addClothingToOutfit', 'getUserOutfits', 'removeOutfit'];
+             'createClothing', 'getOutfitClothes', 'addClothingToOutfit', 'getUserOutfits', 'removeOutfit', 'removeClothingFromOutfit'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -216,6 +216,30 @@ export default class virtualClosetClient extends BindingClass {
                   }
                 });
             return response.data.outfits;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * removes a clothing item from an outfit.
+     * @param id The id of the outfit to remove the clothing item from.
+     * @param clothingId The clothingId that uniquely identifies the clothing item.
+     * @returns The list of clothing items in an outfit.
+     */
+    async removeClothingFromOutfit(id, clothingId, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can remove a clothing item from an outfit.");
+            const response = await this.axiosClient.delete(`outfits/${id}/clothing/${clothingId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                  },
+                  data: {
+                    id: id,
+                    clothingId: clothingId
+                  }
+                });
+            return response.data.clothing;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

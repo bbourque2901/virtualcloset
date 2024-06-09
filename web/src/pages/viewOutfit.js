@@ -9,7 +9,8 @@ import DataStore from "../util/DataStore";
 class ViewOutfit extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage', 'addClothingToPage', 'navigateToAddClothingPage', 'submitClothing'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage',
+             'addClothingToPage', 'navigateToAddClothingPage', 'submitClothing', 'remove'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.addOutfitToPage);
         this.dataStore.addChangeListener(this.addClothingToPage);
@@ -39,6 +40,10 @@ class ViewOutfit extends BindingClass {
 
         this.client = new VirtualClosetClient();
         this.clientLoaded();
+        
+        if (document.getElementById('clothing-items')) {
+        document.getElementById('clothing-items').addEventListener('click', this.remove);
+        }
 
         if (document.getElementById('add-clothing')) {
             document.getElementById('add-clothing').addEventListener('click', this.navigateToAddClothingPage);
@@ -90,8 +95,8 @@ class ViewOutfit extends BindingClass {
                 <td>${item.length}</td>
                 <td>${item.occasion}</td>
                 <td>${item.weather}</td>
-                <td><button data-clothingId="${item.clothingId}" data-outfit-id="${outfit.id}" class="button remove-clothing">Remove</button></td>
-            `;
+                <td><button data-clothing-Id="${item.clothingId}" data-outfit-id="${outfit.id}" class="button remove-clothing">Remove</button></td>
+            </tr>`;
         }
         document.getElementById('clothing-items').innerHTML = clothingHtml;
     }
@@ -148,6 +153,32 @@ class ViewOutfit extends BindingClass {
             submitButton.innerText = origButtonText;
         
     }
+
+    /**
+          * when remove button is clicked, removes clothing item from outfit.
+          */
+    async remove(e) {
+        const removeButton = e.target;
+        if (!removeButton.classList.contains("remove-clothing")) {
+            return;
+        }
+
+        console.log('Outfit ID:', removeButton.dataset.outfitId);
+        console.log('Clothing ID:', removeButton.dataset.clothingId);
+
+        removeButton.innerText = "Removing...";
+
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+
+        await this.client.removeClothingFromOutfit(removeButton.dataset.outfitId, removeButton.dataset.clothingId, (error) => {
+           errorMessageDisplay.innerText = `Error: ${error.message}`;
+           errorMessageDisplay.classList.remove('hidden');
+       });
+
+        document.getElementById(removeButton.dataset.clothingId + removeButton.dataset.outfitId).remove();
+  }
     
 }
 
