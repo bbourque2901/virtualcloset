@@ -36,6 +36,10 @@ U12. As a user, I want to create a new clothing item.
 
 U13. As a user, I want to retrieve my clothing item with a given ID.
 
+U14. As a user, I want to be able to update how many times I've worn an outfit
+
+U15. As a user, I want to be able to update how many times I've worn an article of clothing
+
 ## Stretch Goals
 
 - Making the website more interactive with visuals - having pictures/ representation of the clothing
@@ -142,6 +146,20 @@ U13. As a user, I want to retrieve my clothing item with a given ID.
 - Accepts GET requests to /clothing
 - Accepts the customer ID
 - Returns the sorted clothing list
+
+## Increment Clothing WornCount Endpoint
+
+- Accepts POST requests to /clothing/:clothingId/wornCount
+- Authentication needed
+- Accepts the clothing ID
+- Returns the updated clothing worn count
+
+## Increment Outfit WornCount Endpoint
+
+- Accepts POST requests to /outfits/:id/wornCount
+- Authentication needed
+- Accepts the outfit ID
+- Returns the updated outfit worn count
 
 # Tables 
 

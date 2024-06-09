@@ -12,6 +12,8 @@ import com.nashss.se.virtualcloset.activity.GetSortedClothingActivity;
 import com.nashss.se.virtualcloset.activity.GetSortedOutfitActivity;
 import com.nashss.se.virtualcloset.activity.GetUserClothingActivity;
 import com.nashss.se.virtualcloset.activity.GetUserOutfitsActivity;
+import com.nashss.se.virtualcloset.activity.IncrementClothingWornCountActivity;
+import com.nashss.se.virtualcloset.activity.IncrementOutfitWornCountActivity;
 import com.nashss.se.virtualcloset.activity.UpdateOutfitActivity;
 
 import dagger.Component;
@@ -99,6 +101,18 @@ public interface ServiceComponent {
      * @return GetUserClothingActivity
      */
     GetUserClothingActivity provideGetUserClothingActivity();
+
+    /**
+     * Creates the relevant activity.
+     * @return IncrementClothingWornCountActivity
+     */
+    IncrementClothingWornCountActivity provideIncrementClothingWornCountActivity();
+
+    /**
+     * Creates the relevant activity.
+     * @return IncrementOutfitWornCountActivity
+     */
+    IncrementOutfitWornCountActivity provideIncrementOutfitWornCountActivity();
 }
 
 

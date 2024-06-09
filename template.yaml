@@ -490,6 +490,46 @@ Resources:
             Auth:
               Authorizer: 'NONE'
 
+  IncrementOutfitWornCountLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: app
+      Handler: com.nashss.se.virtualcloset.lambda.IncrementOutfitWornCountLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        BookTrackerService:
+          Type: Api
+          Properties:
+            Path: /outfits/{id}/wornCount
+            Method: post
+
+  IncrementClothingWornCountLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: app
+      Handler: com.nashss.se.virtualcloset.lambda.IncrementClothingWornCountLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        BookTrackerService:
+          Type: Api
+          Properties:
+            Path: /clothing/{clothingId}/wornCount
+            Method: post
+
   #-----------------------------------------------------
   # DynamoDB Configuration
   #-----------------------------------------------------
