@@ -186,13 +186,33 @@ export default class virtualClosetClient extends BindingClass {
      */
     async getUserOutfits(customerId, errorCallback) {
         try {
-            const token = await this.getTokenOrThrow("Only authenticated users can view their booklists.");
+            const token = await this.getTokenOrThrow("Only authenticated users can view their outfits.");
             const response = await this.axiosClient.get(`userOutfits`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                   }
                 });
             return response.data.outfits;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Get the clothes of a given user.
+     * @param customerId Unique identifier for a user
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The list of clothing associated with a user.
+     */
+    async getUserClothing(customerId, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can view their clothes.");
+            const response = await this.axiosClient.get(`userClothing`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                  }
+                });
+            return response.data.clothing;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
