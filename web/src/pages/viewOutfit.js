@@ -9,7 +9,8 @@ import DataStore from "../util/DataStore";
 class ViewOutfit extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage', 'addClothingToPage', 'navigateToAddClothingPage', 'submitClothing'], this);
+        this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage', 'updateOutfitName',
+             'addClothingToPage', 'navigateToAddClothingPage', 'submitClothing', 'remove'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.addOutfitToPage);
         this.dataStore.addChangeListener(this.addClothingToPage);
@@ -39,6 +40,10 @@ class ViewOutfit extends BindingClass {
 
         this.client = new VirtualClosetClient();
         this.clientLoaded();
+        
+        if (document.getElementById('clothing-items')) {
+        document.getElementById('clothing-items').addEventListener('click', this.remove);
+        }
 
         if (document.getElementById('add-clothing')) {
             document.getElementById('add-clothing').addEventListener('click', this.navigateToAddClothingPage);
@@ -46,6 +51,10 @@ class ViewOutfit extends BindingClass {
 
         if (document.getElementById('submit-clothing')) {
             document.getElementById('submit-clothing').addEventListener('click', this.submitClothing);
+        }
+        
+        if (document.getElementById('update-outfit')) {
+        document.getElementById('update-outfit').addEventListener('click', this.updateOutfitName);
         }
     }
 
@@ -73,24 +82,25 @@ class ViewOutfit extends BindingClass {
      */
     addClothingToPage() {
         const clothingItems = this.dataStore.get('clothingItems');
+        const outfit = this.dataStore.get('outfit');
     
         if (clothingItems == null) {
             return;
         }
     
-        let clothingHtml = '';
+        let clothingHtml = '<table id="clothing-table"><tr><th>Category</th><th>Color</th><th>Fit</th><th>Length</th><th>Occasion</th><th>Weather</th><th>Remove Clothing Item</th>';
         let item;
         for (item of clothingItems) {
             clothingHtml += `
-                <li class="clothing-item">
-                    <span class="category">${item.category}</span>
-                    <span class="color">${item.color}</span>
-                    <span class="fit">${item.fit}</span>
-                    <span class="length">${item.length}</span>
-                    <span class="occasion">${item.occasion}</span>
-                    <span class="weather">${item.weather}</span>
-                </li>
-            `;
+            <tr id="${item.clothingId + outfit.id}">
+                <td>${item.category}</td>
+                <td>${item.color}</td>
+                <td>${item.fit}</td>
+                <td>${item.length}</td>
+                <td>${item.occasion}</td>
+                <td>${item.weather}</td>
+                <td><button data-clothing-Id="${item.clothingId}" data-outfit-id="${outfit.id}" class="button remove-clothing">Remove</button></td>
+            </tr>`;
         }
         document.getElementById('clothing-items').innerHTML = clothingHtml;
     }
@@ -146,6 +156,60 @@ class ViewOutfit extends BindingClass {
         
             submitButton.innerText = origButtonText;
         
+    }
+
+    /**
+          * when remove button is clicked, removes clothing item from outfit.
+          */
+    async remove(e) {
+        const removeButton = e.target;
+        if (!removeButton.classList.contains("remove-clothing")) {
+            return;
+        }
+
+        console.log('Outfit ID:', removeButton.dataset.outfitId);
+        console.log('Clothing ID:', removeButton.dataset.clothingId);
+
+        removeButton.innerText = "Removing...";
+
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+
+        await this.client.removeClothingFromOutfit(removeButton.dataset.outfitId, removeButton.dataset.clothingId, (error) => {
+           errorMessageDisplay.innerText = `Error: ${error.message}`;
+           errorMessageDisplay.classList.remove('hidden');
+       });
+
+        document.getElementById(removeButton.dataset.clothingId + removeButton.dataset.outfitId).remove();
+  }
+
+  /**
+          * when button is clicked, user is prompted to update outfit name.
+          */
+  async updateOutfitName() {
+    const errorMessageDisplay = document.getElementById('error-message');
+    errorMessageDisplay.innerText = ``;
+    errorMessageDisplay.classList.add('hidden');
+
+    const newName = prompt("Enter new outfit name: ");
+    if (!newName) return;
+
+    const outfit = this.dataStore.get('outfit');
+    if (outfit == null) {
+      return;
+    }
+
+    document.getElementById('outfit-name').innerText = 'Updating...';
+
+    const newOutfit = await this.client.updateOutfitName(outfit.id, newName, (error) => {
+      errorMessageDisplay.innerText = `Error: ${error.message}`;
+      errorMessageDisplay.classList.remove('hidden');
+    });
+
+    document.getElementById('outfit-name').innerText = newName;
+    this.dataStore.set('outfit', newOutfit);
+    console.log("button clicked!");
     }
     
 }
