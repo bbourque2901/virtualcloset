@@ -11,7 +11,7 @@ export default class virtualClosetClient extends BindingClass {
     constructor(props = {}) {
         super();
 
-        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing',
+        const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing', 'updateOutfitName',
              'createClothing', 'getOutfitClothes', 'addClothingToOutfit', 'getUserOutfits', 'removeOutfit', 'removeClothingFromOutfit'];
         this.bindClassMethods(methodsToBind, this);
 
@@ -244,6 +244,28 @@ export default class virtualClosetClient extends BindingClass {
             this.handleError(error, errorCallback)
         }
     }
+
+    /**
+     * Update outfit name.
+     * @param id the id of the outfit.
+     * @returns an updated outfit name.
+     */
+    async updateOutfitName(outfitId, newName, errorCallback) {
+        try {
+                const token = await this.getTokenOrThrow("Only authenticated users can update an outfit name.");
+                const response = await this.axiosClient.put(`outfits/${outfitId}`, {
+                    id: outfitId,
+                    name: newName
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+                return response.data.outfits;
+            } catch (error) {
+                this.handleError(error, errorCallback)
+            }
+     }
 
     /**
      * Helper method to log the error and run any error functions.

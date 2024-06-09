@@ -9,7 +9,7 @@ import DataStore from "../util/DataStore";
 class ViewOutfit extends BindingClass {
     constructor() {
         super();
-        this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage',
+        this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage', 'updateOutfitName',
              'addClothingToPage', 'navigateToAddClothingPage', 'submitClothing', 'remove'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.addOutfitToPage);
@@ -51,6 +51,10 @@ class ViewOutfit extends BindingClass {
 
         if (document.getElementById('submit-clothing')) {
             document.getElementById('submit-clothing').addEventListener('click', this.submitClothing);
+        }
+        
+        if (document.getElementById('update-outfit')) {
+        document.getElementById('update-outfit').addEventListener('click', this.updateOutfitName);
         }
     }
 
@@ -179,6 +183,34 @@ class ViewOutfit extends BindingClass {
 
         document.getElementById(removeButton.dataset.clothingId + removeButton.dataset.outfitId).remove();
   }
+
+  /**
+          * when button is clicked, user is prompted to update outfit name.
+          */
+  async updateOutfitName() {
+    const errorMessageDisplay = document.getElementById('error-message');
+    errorMessageDisplay.innerText = ``;
+    errorMessageDisplay.classList.add('hidden');
+
+    const newName = prompt("Enter new outfit name: ");
+    if (!newName) return;
+
+    const outfit = this.dataStore.get('outfit');
+    if (outfit == null) {
+      return;
+    }
+
+    document.getElementById('outfit-name').innerText = 'Updating...';
+
+    const newOutfit = await this.client.updateOutfitName(outfit.id, newName, (error) => {
+      errorMessageDisplay.innerText = `Error: ${error.message}`;
+      errorMessageDisplay.classList.remove('hidden');
+    });
+
+    document.getElementById('outfit-name').innerText = newName;
+    this.dataStore.set('outfit', newOutfit);
+    console.log("button clicked!");
+    }
     
 }
 
