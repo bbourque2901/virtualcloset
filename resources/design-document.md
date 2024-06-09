@@ -11,17 +11,30 @@ This virtual closet seeks to address these challenges by offering a digital plat
 ## Use Cases
 
 U1. As a user, I want to create a new outfit with a given name and list of tags.
+
 U2. As a user, I want to retrieve my outfit with a given ID.
+
 U3. As a user, I want to update my outfit name.
+
 U4. As a user, I want to add clothing items to my outfit.
+
 U5. As a user, I want to retrieve all the clothing items in my outfit.
+
 U6. As a user, I want to view all the outfits I’ve created
-U7. As a user, I want to be able to remove clothing items from my outfit.
-U8. As a user, I want to be able to remove an entire outfit.
-U9. As a user, I want to be able to keep track of how many times I’ve worn an outfit
-U10. As a user, I want to be able to keep track of how many times I’ve worn an article of clothing
-U11. As a user, I want to create a new clothing item.
-U12. As a user, I want to retrieve my clothing item with a given ID.
+
+U7. As a user, I want to view all the clothing items I've created.
+
+U8. As a user, I want to be able to remove clothing items from my outfit.
+
+U9. As a user, I want to be able to remove an entire outfit.
+
+U10. As a user, I want to be able to keep track of how many times I’ve worn an outfit
+
+U11. As a user, I want to be able to keep track of how many times I’ve worn an article of clothing
+
+U12. As a user, I want to create a new clothing item.
+
+U13. As a user, I want to retrieve my clothing item with a given ID.
 
 ## Stretch Goals
 
@@ -91,7 +104,15 @@ U12. As a user, I want to retrieve my clothing item with a given ID.
 - Accepts GET requests to /outfits/:customerId
 - Authentication needed
 - Accepts a customer ID and returns a list of OutfitModels created by that customer
-  - If the given customer has not created any playlists, an empty list will be returned
+  - If the given customer has not created any outfits, an empty list will be returned
+
+## View All Created Clothes Endpoint
+
+- Accepts GET requests to /clothing/:customerId
+- Authentication needed
+- Accepts a customer ID and returns a list of ClothingModels created by that customer
+  - If the given customer has not created any outfits, an empty list will be returned
+  - If the given customer has not created any outfits, an empty list will be returned
 
 ## Remove Clothing Item from Outfit Endpoint
 
