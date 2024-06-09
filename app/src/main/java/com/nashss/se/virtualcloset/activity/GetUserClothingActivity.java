@@ -6,11 +6,12 @@ import com.nashss.se.virtualcloset.converters.ModelConverter;
 import com.nashss.se.virtualcloset.dynamodb.Clothing;
 import com.nashss.se.virtualcloset.dynamodb.ClothingDao;
 import com.nashss.se.virtualcloset.models.ClothingModel;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.inject.Inject;
 import java.util.List;
+import javax.inject.Inject;
 
 public class GetUserClothingActivity {
 
