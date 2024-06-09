@@ -73,23 +73,24 @@ class ViewOutfit extends BindingClass {
      */
     addClothingToPage() {
         const clothingItems = this.dataStore.get('clothingItems');
+        const outfit = this.dataStore.get('outfit');
     
         if (clothingItems == null) {
             return;
         }
     
-        let clothingHtml = '';
+        let clothingHtml = '<table id="clothing-table"><tr><th>Category</th><th>Color</th><th>Fit</th><th>Length</th><th>Occasion</th><th>Weather</th><th>Remove Clothing Item</th>';
         let item;
         for (item of clothingItems) {
             clothingHtml += `
-                <li class="clothing-item">
-                    <span class="category">${item.category}</span>
-                    <span class="color">${item.color}</span>
-                    <span class="fit">${item.fit}</span>
-                    <span class="length">${item.length}</span>
-                    <span class="occasion">${item.occasion}</span>
-                    <span class="weather">${item.weather}</span>
-                </li>
+            <tr id="${item.clothingId + outfit.id}">
+                <td>${item.category}</td>
+                <td>${item.color}</td>
+                <td>${item.fit}</td>
+                <td>${item.length}</td>
+                <td>${item.occasion}</td>
+                <td>${item.weather}</td>
+                <td><button data-clothingId="${item.clothingId}" data-outfit-id="${outfit.id}" class="button remove-clothing">Remove</button></td>
             `;
         }
         document.getElementById('clothing-items').innerHTML = clothingHtml;
