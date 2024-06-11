@@ -125,7 +125,8 @@ public class OutfitDao {
                 .withExpressionAttributeValues(valueMap)
                 .withIndexName("outfit-worncount-index")
                 .withScanIndexForward(ascending)
-                .withConsistentRead(false);
+                .withConsistentRead(false)
+                .withLimit(5);
 
         return dynamoDBMapper.query(Outfit.class, queryExpression);
 

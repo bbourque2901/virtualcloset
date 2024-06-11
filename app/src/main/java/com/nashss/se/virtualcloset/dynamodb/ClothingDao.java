@@ -62,7 +62,8 @@ public class ClothingDao {
                 .withExpressionAttributeValues(valueMap)
                 .withIndexName("clothing-worncount-index")
                 .withScanIndexForward(ascending)
-                .withConsistentRead(false);
+                .withConsistentRead(false)
+                .withLimit(5);
 
         return dynamoDBMapper.query(Clothing.class, queryExpression);
     }
