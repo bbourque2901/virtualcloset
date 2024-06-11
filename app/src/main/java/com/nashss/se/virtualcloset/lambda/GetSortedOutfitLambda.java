@@ -1,6 +1,5 @@
 package com.nashss.se.virtualcloset.lambda;
 
-import com.nashss.se.virtualcloset.activity.requests.GetSortedClothingRequest;
 import com.nashss.se.virtualcloset.activity.requests.GetSortedOutfitRequest;
 import com.nashss.se.virtualcloset.activity.results.GetSortedOutfitResult;
 
@@ -13,20 +12,20 @@ public class GetSortedOutfitLambda
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetSortedOutfitRequest> input, Context context) {
         return super.runActivity(
-                () -> {
-                    GetSortedOutfitRequest unAuthRequest = input.fromUserClaims(claims ->
-                            GetSortedOutfitRequest.builder()
-                                    .withCustomerId(claims.get("email"))
-                                    .build());
+            () -> {
+                GetSortedOutfitRequest unAuthRequest = input.fromUserClaims(claims ->
+                        GetSortedOutfitRequest.builder()
+                                .withCustomerId(claims.get("email"))
+                                .build());
 
-                    return input.fromQuery(query ->
-                            GetSortedOutfitRequest.builder()
-                                    .withCustomerId(unAuthRequest.getCustomerId())
-                                    .withAscending(Boolean.parseBoolean(query.getOrDefault("ascending", "true")))
-                                    .build());
-                },
-                (request, serviceComponent) ->
-                        serviceComponent.provideGetSortedOutfitActivity().handleRequest(request)
+                return input.fromQuery(query ->
+                        GetSortedOutfitRequest.builder()
+                                .withCustomerId(unAuthRequest.getCustomerId())
+                                .withAscending(Boolean.parseBoolean(query.getOrDefault("ascending", "true")))
+                                .build());
+            },
+            (request, serviceComponent) ->
+                    serviceComponent.provideGetSortedOutfitActivity().handleRequest(request)
         );
     }
 }

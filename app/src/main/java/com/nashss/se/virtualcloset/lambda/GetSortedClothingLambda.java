@@ -12,20 +12,20 @@ public class GetSortedClothingLambda
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetSortedClothingRequest> input, Context context) {
         return super.runActivity(
-                () -> {
-                    GetSortedClothingRequest unAuthRequest = input.fromUserClaims(claims ->
-                            GetSortedClothingRequest.builder()
-                                    .withCustomerId(claims.get("email"))
-                                    .build());
+            () -> {
+                GetSortedClothingRequest unAuthRequest = input.fromUserClaims(claims ->
+                        GetSortedClothingRequest.builder()
+                                .withCustomerId(claims.get("email"))
+                                .build());
 
-                    return input.fromQuery(query ->
-                            GetSortedClothingRequest.builder()
-                                    .withCustomerId(unAuthRequest.getCustomerId())
-                                    .withAscending(Boolean.parseBoolean(query.getOrDefault("ascending", "true")))
-                                    .build());
-                },
-                (request, serviceComponent) ->
-                        serviceComponent.provideGetSortedClothingActivity().handleRequest(request)
+                return input.fromQuery(query ->
+                        GetSortedClothingRequest.builder()
+                                .withCustomerId(unAuthRequest.getCustomerId())
+                                .withAscending(Boolean.parseBoolean(query.getOrDefault("ascending", "true")))
+                                .build());
+            },
+            (request, serviceComponent) ->
+                    serviceComponent.provideGetSortedClothingActivity().handleRequest(request)
         );
     }
 }
