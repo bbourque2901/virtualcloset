@@ -21,10 +21,11 @@ class ViewUserRecommendations extends BindingClass {
  async clientLoaded() {
     const urlParams = new URLSearchParams(window.location.search);
     const customerId = urlParams.get('email');
+    const ascending = true;
     document.getElementById('outfits').innerText = "Loading Outfits ...";
     document.getElementById('clothing').innerText = "Loading Clothes ...";
-    const outfits = await this.client.getSortedOutfit(customerId);
-    const clothing = await this.client.getSortedClothing(customerId);
+    const outfits = await this.client.getSortedOutfit(customerId, ascending);
+    const clothing = await this.client.getSortedClothing(customerId, ascending);
     this.dataStore.set('outfits', outfits);
     this.dataStore.set('clothing', clothing);
     this.addOutfitsToPage();

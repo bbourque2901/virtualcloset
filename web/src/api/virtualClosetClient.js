@@ -296,9 +296,13 @@ export default class virtualClosetClient extends BindingClass {
      */
      async getSortedClothing(customerId, ascending, errorCallback) {
         try {
+            const token = await this.getTokenOrThrow("Only authenticated users can view their sorted clothes.");
             const response = await this.axiosClient.get(`sortedClothing`, {
                 headers: {
                     Authorization: `Bearer ${token}`
+                  },
+                  data: {
+                    ascending: ascending
                   }
                 });
             return response.data.clothingList;
@@ -315,9 +319,13 @@ export default class virtualClosetClient extends BindingClass {
      */
       async getSortedOutfit(customerId, ascending, errorCallback) {
         try {
-            const response = await this.axiosClient.get(`sortedOutfits`, {
+            const token = await this.getTokenOrThrow("Only authenticated users can view their sorted outfits.");
+            const response = await this.axiosClient.get(`sortedOutfits`,  {
                 headers: {
                     Authorization: `Bearer ${token}`
+                  },
+                  data: {
+                    ascending: ascending
                   }
                 });
             return response.data.outfits;
