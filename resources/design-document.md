@@ -138,12 +138,14 @@ U15. As a user, I want to be able to update how many times I've worn an article 
 ## Track Times Worn an Outfit Endpoint
 
 - Accepts GET requests to /outfits
+- Authentication needed
 - Accepts the customer ID
 - Returns the sorted outfit list
 
 ## Track Times Worn of a Clothing Item Endpoint
 
 - Accepts GET requests to /clothing
+- Authentication needed
 - Accepts the customer ID
 - Returns the sorted clothing list
 

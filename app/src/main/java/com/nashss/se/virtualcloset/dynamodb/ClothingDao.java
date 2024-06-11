@@ -60,9 +60,10 @@ public class ClothingDao {
         DynamoDBQueryExpression<Clothing> queryExpression = new DynamoDBQueryExpression<Clothing>()
                 .withKeyConditionExpression("customerId = :customerId")
                 .withExpressionAttributeValues(valueMap)
-                .withIndexName("clothing-worncount")
+                .withIndexName("clothing-worncount-index")
                 .withScanIndexForward(ascending)
-                .withConsistentRead(false);
+                .withConsistentRead(false)
+                .withLimit(5);
 
         return dynamoDBMapper.query(Clothing.class, queryExpression);
     }

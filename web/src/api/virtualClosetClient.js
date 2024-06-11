@@ -12,7 +12,8 @@ export default class virtualClosetClient extends BindingClass {
         super();
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing', 'updateOutfitName',
-             'createClothing', 'getOutfitClothes', 'addClothingToOutfit', 'getUserOutfits', 'removeOutfit', 'removeClothingFromOutfit'];
+             'createClothing', 'getOutfitClothes', 'addClothingToOutfit', 'getUserOutfits', 'removeOutfit', 'removeClothingFromOutfit',
+            'getSortedClothing', 'getSortedOutfit'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -286,6 +287,52 @@ export default class virtualClosetClient extends BindingClass {
                 this.handleError(error, errorCallback)
             }
      }
+
+     /**
+     * Get the sorted clothes of a given user.
+     * @param customerId Unique identifier for a user
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The list of sorted clothing associated with a user.
+     */
+     async getSortedClothing(customerId, ascending, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can view their sorted clothes.");
+            const response = await this.axiosClient.get(`sortedClothing`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                  },
+                  params: {
+                    ascending: ascending
+                  }
+                });
+            return response.data.clothes;
+        } catch (error) {
+            this.handleError(error, errorCallback);
+        }
+    }
+
+      /**
+     * Get the sorted outfits of a given user.
+     * @param customerId Unique identifier for a user
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns The list of sorted outfits associated with a user.
+     */
+      async getSortedOutfit(customerId, ascending, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can view their sorted outfits.");
+            const response = await this.axiosClient.get(`sortedOutfits`,  {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                  },
+                  params: {
+                    ascending: ascending
+                  }
+                });
+            return response.data.outfits;
+        } catch (error) {
+            this.handleError(error, errorCallback);
+        }
+    }
 
     /**
      * Helper method to log the error and run any error functions.

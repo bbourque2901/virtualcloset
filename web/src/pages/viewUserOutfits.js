@@ -16,7 +16,7 @@ import DataStore from "../util/DataStore";
      }
 
  /**
-  * Once the client is loaded, get the outfit metadata and clothing list.
+  * Once the client is loaded, get the outfit metadata.
   */
  async clientLoaded() {
      const urlParams = new URLSearchParams(window.location.search);

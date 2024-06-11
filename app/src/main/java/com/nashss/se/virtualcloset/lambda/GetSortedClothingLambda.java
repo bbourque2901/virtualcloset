@@ -8,15 +8,22 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 public class GetSortedClothingLambda
         extends LambdaActivityRunner<GetSortedClothingRequest, GetSortedClothingResult>
-        implements RequestHandler<LambdaRequest<GetSortedClothingRequest>, LambdaResponse> {
+        implements RequestHandler<AuthenticatedLambdaRequest<GetSortedClothingRequest>, LambdaResponse> {
     @Override
-    public LambdaResponse handleRequest(LambdaRequest<GetSortedClothingRequest> input, Context context) {
+    public LambdaResponse handleRequest(AuthenticatedLambdaRequest<GetSortedClothingRequest> input, Context context) {
         return super.runActivity(
-            () -> input.fromQuery(query ->
-                    GetSortedClothingRequest.builder()
-                            .withCustomerId(query.get("customerId"))
-                            .withAscending(Boolean.parseBoolean(query.get("ascending")))
-                            .build()),
+            () -> {
+                GetSortedClothingRequest unAuthRequest = input.fromUserClaims(claims ->
+                        GetSortedClothingRequest.builder()
+                                .withCustomerId(claims.get("email"))
+                                .build());
+
+                return input.fromQuery(query ->
+                        GetSortedClothingRequest.builder()
+                                .withCustomerId(unAuthRequest.getCustomerId())
+                                .withAscending(Boolean.parseBoolean(query.getOrDefault("ascending", "true")))
+                                .build());
+            },
             (request, serviceComponent) ->
                     serviceComponent.provideGetSortedClothingActivity().handleRequest(request)
         );

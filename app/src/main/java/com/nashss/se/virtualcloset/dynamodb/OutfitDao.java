@@ -123,9 +123,10 @@ public class OutfitDao {
         DynamoDBQueryExpression<Outfit> queryExpression = new DynamoDBQueryExpression<Outfit>()
                 .withKeyConditionExpression("customerId = :customerId")
                 .withExpressionAttributeValues(valueMap)
-                .withIndexName("outfit-worncount")
+                .withIndexName("outfit-worncount-index")
                 .withScanIndexForward(ascending)
-                .withConsistentRead(false);
+                .withConsistentRead(false)
+                .withLimit(5);
 
         return dynamoDBMapper.query(Outfit.class, queryExpression);
 

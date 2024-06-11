@@ -29,7 +29,7 @@ public class Clothing {
         this.clothingId = clothingId;
     }
 
-    @DynamoDBAttribute(attributeName = "customerId")
+    @DynamoDBIndexHashKey(attributeName = "customerId", globalSecondaryIndexName = "clothing-worncount-index")
     public String getCustomerId() {
         return customerId;
     }
@@ -38,7 +38,7 @@ public class Clothing {
         this.customerId = customerId;
     }
 
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "CategoryWornCountIndex", attributeName = "wornCount")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "clothing-worncount-index", attributeName = "wornCount")
     public Integer getWornCount() {
         return wornCount;
     }
@@ -47,7 +47,7 @@ public class Clothing {
         this.wornCount = wornCount;
     }
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "CategoryWornCountIndex", attributeName = "category")
+    @DynamoDBAttribute(attributeName = "category")
     public String getCategory() {
         return category;
     }
