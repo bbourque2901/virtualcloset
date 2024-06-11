@@ -51,12 +51,12 @@ import DataStore from "../util/DataStore";
         for (cloth of clothing) {
             clothingHtml += `
             <tr id= "${cloth.id}">
-                <td>${cloth.category}</td>
-                <td>${cloth.color}</td>
-                <td>${cloth.fit}</td>
-                <td>${cloth.length}</td>
-                <td>${cloth.occasion}</td>
-                <td>${cloth.weather}</td>
+                <td>${cloth.category || ''}</td>
+                <td>${cloth.color || ''}</td>
+                <td>${cloth.fit || ''}</td>
+                <td>${cloth.length || ''}</td>
+                <td>${cloth.occasion || ''}</td>
+                <td>${cloth.weather || ''}</td>
             </tr>`;
         }
 
