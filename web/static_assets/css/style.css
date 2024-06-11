@@ -5,12 +5,16 @@
     --tertiary-color: #e183bb;
     --error-color: #EE3A23;
 }
+@font-face {
+    font-family: 'Bulky Pix';
+    src: url("BULKYPIX.TTF");
+}
 
 .background {
     background-color: #b566df;
     margin: 0;
     counter-reset: section;
-    font-family: "Helvetica Neue",Helvetica,sans-serif;
+    font-family: "Bulky Pix";
 }
 
 .header {
@@ -22,7 +26,7 @@
     color: var(--secondary-color);
     padding: 4px 20px;
     font-weight: bold;
-    font-family: "Courier New", Courier, monospace;;
+    font-family: "Bulky Pix";
 }
 
 .site-title {
@@ -39,6 +43,7 @@
   color: var(--secondary-color);
   padding: 6px 8px 4px 8px;
   text-align: center;
+  font-family: "Bulky Pix";
   font-weight: bold;
   font-size: 16px;
   text-decoration: none;
@@ -84,9 +89,9 @@
     margin: 20px;
     padding: 10px 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 100%;
+    width: fit-content;
     text-align: center;
+    align-content: center;
 }
 
 .attribute {

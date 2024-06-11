@@ -56,7 +56,7 @@ import DataStore from "../util/DataStore";
                 <td>
                     <a href="outfit.html?id=${outfit.id}">${outfit.name}</a>
                 </td>
-                <td>${outfit.tags?.join(', ')}</td>
+                <td>${outfit.tags?.join(', ') || ''}</td>
                 <td><button data-id="${outfit.id}" class="button remove-outfit">Remove ${outfit.name}</button></td>
             </tr>`;
         }

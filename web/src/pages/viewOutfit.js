@@ -93,12 +93,12 @@ class ViewOutfit extends BindingClass {
         for (item of clothingItems) {
             clothingHtml += `
             <tr id="${item.clothingId + outfit.id}">
-                <td>${item.category}</td>
-                <td>${item.color}</td>
-                <td>${item.fit}</td>
-                <td>${item.length}</td>
-                <td>${item.occasion}</td>
-                <td>${item.weather}</td>
+                <td>${item.category || ''}</td>
+                <td>${item.color || ''}</td>
+                <td>${item.fit || ''}</td>
+                <td>${item.length || ''}</td>
+                <td>${item.occasion || ''}</td>
+                <td>${item.weather || ''}</td>
                 <td><button data-clothing-Id="${item.clothingId}" data-outfit-id="${outfit.id}" class="button remove-clothing">Remove</button></td>
             </tr>`;
         }
