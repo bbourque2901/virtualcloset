@@ -294,19 +294,16 @@ export default class virtualClosetClient extends BindingClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The list of sorted clothing associated with a user.
      */
-    async getSortedClothing(customerId, ascending, errorCallback) {
+     async getSortedClothing(customerId, ascending, errorCallback) {
         try {
-            const response = await this.axiosClient.get(`clothing`, {
-                customerId: customerId,
-                ascending : ascending
-            }, {
+            const response = await this.axiosClient.get(`sortedClothing`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                   }
                 });
-            return response.data.clothing;
+            return response.data.clothingList;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 
@@ -318,17 +315,14 @@ export default class virtualClosetClient extends BindingClass {
      */
       async getSortedOutfit(customerId, ascending, errorCallback) {
         try {
-            const response = await this.axiosClient.get(`outfits`, {
-                customerId: customerId,
-                ascending : ascending
-            }, {
+            const response = await this.axiosClient.get(`sortedOutfits`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                   }
                 });
             return response.data.outfits;
         } catch (error) {
-            this.handleError(error, errorCallback)
+            this.handleError(error, errorCallback);
         }
     }
 

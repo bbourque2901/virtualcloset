@@ -463,7 +463,7 @@ Resources:
         VirtualCloset:
           Type: Api
           Properties:
-            Path: /outfits
+            Path: /sortedOutfits
             Method: get
             Auth:
               Authorizer: 'NONE'
@@ -485,7 +485,7 @@ Resources:
         VirtualCloset:
           Type: Api
           Properties:
-            Path: /clothing
+            Path: /sortedClothing
             Method: get
             Auth:
               Authorizer: 'NONE'
