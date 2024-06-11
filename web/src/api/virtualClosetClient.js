@@ -301,11 +301,11 @@ export default class virtualClosetClient extends BindingClass {
                 headers: {
                     Authorization: `Bearer ${token}`
                   },
-                  data: {
+                  params: {
                     ascending: ascending
                   }
                 });
-            return response.data.clothingList;
+            return response.data.clothes;
         } catch (error) {
             this.handleError(error, errorCallback);
         }
@@ -324,7 +324,7 @@ export default class virtualClosetClient extends BindingClass {
                 headers: {
                     Authorization: `Bearer ${token}`
                   },
-                  data: {
+                  params: {
                     ascending: ascending
                   }
                 });

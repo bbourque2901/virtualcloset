@@ -90,7 +90,7 @@ addClothingToPage() {
             <td>${cloth.length || ''}</td>
             <td>${cloth.occasion || ''}</td>
             <td>${cloth.weather || ''}</td>
-            <td>${cloth.wornCount || ''}</td>
+            <td>${cloth.wornCount}</td>
         </tr>`;
     }
 
