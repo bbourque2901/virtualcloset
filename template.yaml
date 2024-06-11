@@ -548,7 +548,7 @@ Resources:
         - AttributeName: "id"
           KeyType: "HASH"
       GlobalSecondaryIndexes:
-        - IndexName: "outfit-worncount-index"
+        - IndexName: "outfit-worncount"
           KeySchema:
             - AttributeName: "customerId"
               KeyType: "HASH"
@@ -573,7 +573,7 @@ Resources:
         - AttributeName: "clothingId"
           KeyType: "HASH"
       GlobalSecondaryIndexes:
-        - IndexName: "clothing-worncount-index"
+        - IndexName: "clothing-worncount"
           KeySchema:
             - AttributeName: "customerId"
               KeyType: "HASH"
