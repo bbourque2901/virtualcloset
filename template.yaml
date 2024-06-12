@@ -278,7 +278,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /outfits
@@ -298,7 +298,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /clothing
@@ -318,7 +318,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /outfits/{id}
@@ -338,7 +338,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /outfits/{id}/clothing
@@ -358,7 +358,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        MusicPlaylistService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /outfits/{id}/clothing
@@ -380,7 +380,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        BookTrackerService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /userOutfits
@@ -400,7 +400,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        BookTrackerService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /userClothing
@@ -420,7 +420,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        BookTrackerService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /outfits/{id}/clothing/{clothingId}
@@ -440,7 +440,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        BookTrackerService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /outfits/{id}
@@ -465,8 +465,6 @@ Resources:
           Properties:
             Path: /sortedOutfits
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   GetSortedClothingLambda:
     Type: AWS::Serverless::Function
@@ -487,8 +485,6 @@ Resources:
           Properties:
             Path: /sortedClothing
             Method: get
-            Auth:
-              Authorizer: 'NONE'
 
   IncrementOutfitWornCountLambda:
     Type: AWS::Serverless::Function
@@ -504,7 +500,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        BookTrackerService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /outfits/{id}/wornCount
@@ -524,7 +520,7 @@ Resources:
         Variables:
           JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
       Events:
-        BookTrackerService:
+        VirtualCloset:
           Type: Api
           Properties:
             Path: /clothing/{clothingId}/wornCount
