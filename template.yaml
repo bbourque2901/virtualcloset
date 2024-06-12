@@ -207,6 +207,9 @@ Resources:
             - Effect: Allow
               Action: dynamodb:*
               Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/outfits"
+            - Effect: Allow
+              Action: dynamodb:query
+              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/outfits/index/outfit-worncount-index"
 
         - PolicyName: 'AccessClothingTable'
           PolicyDocument:
@@ -215,6 +218,9 @@ Resources:
             - Effect: Allow
               Action: dynamodb:*
               Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/clothing"
+            - Effect: Allow
+              Action: dynamodb:query
+              Resource: !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/clothing/index/clothing-worncount-index"
 
   #-----------------------------------------------------
   # Lambda Functions Configuration
