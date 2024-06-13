@@ -9,7 +9,7 @@ import DataStore from "../util/DataStore";
   class ViewUserClothing extends BindingClass {
      constructor() {
              super();
-             this.bindClassMethods(['clientLoaded', 'mount', 'addClothingToPage'], this);
+             this.bindClassMethods(['clientLoaded', 'mount', 'addClothingToPage', 'incrementWornCount'], this);
              this.dataStore = new DataStore();
              console.log("viewUserClothing constructor");
              this.header = new Header(this.dataStore);
@@ -31,6 +31,8 @@ import DataStore from "../util/DataStore";
   * Load the VirtualClosetClient.
   */
   mount() {
+      document.getElementById('clothing').addEventListener("click", this.incrementWornCount);
+
       this.client = new VirtualClosetClient();
       this.clientLoaded();
       this.header.addHeaderToPage();
@@ -46,7 +48,7 @@ import DataStore from "../util/DataStore";
             return;
         }
 
-        let clothingHtml = '<table id="clothing-table"><tr><th>Category</th><th>Color</th><th>Fit</th><th>Length</th><th>Occasion</th><th>Weather</th>';
+        let clothingHtml = '<table id="clothing-table"><tr><th>Category</th><th>Color</th><th>Fit</th><th>Length</th><th>Occasion</th><th>Weather</th><th>Worn Count</th>';
         let cloth;
         for (cloth of clothing) {
             clothingHtml += `
@@ -57,12 +59,40 @@ import DataStore from "../util/DataStore";
                 <td>${cloth.length || ''}</td>
                 <td>${cloth.occasion || ''}</td>
                 <td>${cloth.weather || ''}</td>
+                <td>${cloth.wornCount} <button data-id="${cloth.id}" class="button modify-wornCount">+</button></td>
             </tr>`;
         }
 
         document.getElementById('clothing').innerHTML = clothingHtml;
 
         document.getElementById('clothing-owner').innerText = cloth.customerId;
+    }
+
+    async incrementWornCount(e) {
+        const incrementButton = e.target;
+        if (!incrementButton.classList.contains('modify-wornCount')) {
+            return;
+        }
+        
+        incrementButton.innerText = "+..";
+
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+
+        const clothingId = incrementButton.getAttribute('data-id');
+
+        try {
+            const updatedClothing = await this.client.incrementClothingWC(clothingId);
+            const row = document.getElementById(clothingId);
+            const wornCountCell = row.cells[6];
+            wornCountCell.innerHTML = `${updatedClothing.wornCount} <button data-id="${updatedClothing.id}" class="button modify-wornCount">+</button>`;
+        } catch (error) {
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
+        }
+
+        incrementButton.innerText = "+";
     }
 
 }

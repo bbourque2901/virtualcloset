@@ -341,7 +341,7 @@ export default class virtualClosetClient extends BindingClass {
      */
     async incrementOutfitWC(id, errorCallback) {
         try {
-            const token = await this.getTokenOrThrow("Only authenticated users can add clothing to an outfit.");
+            const token = await this.getTokenOrThrow("Only authenticated users can modify the worncount.");
             const response = await this.axiosClient.post(`outfits/${id}/wornCount`, {
                 id: id,
             }, {
@@ -362,7 +362,7 @@ export default class virtualClosetClient extends BindingClass {
      */
     async incrementClothingWC(clothingId, errorCallback) {
         try {
-            const token = await this.getTokenOrThrow("Only authenticated users can add clothing to an outfit.");
+            const token = await this.getTokenOrThrow("Only authenticated users can modify the worncount.");
             const response = await this.axiosClient.post(`clothing/${clothingId}/wornCount`, {
                 clothingId: clothingId,
             }, {
