@@ -86,7 +86,7 @@ import DataStore from "../util/DataStore";
             const updatedClothing = await this.client.incrementClothingWC(clothingId);
             const row = document.getElementById(clothingId);
             const wornCountCell = row.cells[6];
-            wornCountCell.innerHTML = `${updatedClothing.wornCount} <button data-id="${updatedClothing.id}" class="button modify-wornCount">+</button>`;
+            wornCountCell.innerHTML = `${updatedClothing.wornCount} <button data-id="${updatedClothing.clothingId}" class="button modify-wornCount">+</button>`;
         } catch (error) {
             errorMessageDisplay.innerText = `Error: ${error.message}`;
             errorMessageDisplay.classList.remove('hidden');

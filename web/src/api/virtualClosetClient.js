@@ -349,7 +349,7 @@ export default class virtualClosetClient extends BindingClass {
                     Authorization: `Bearer ${token}`
                 }
             });
-            return response.data.oufit;
+            return response.data.outfit;
         } catch (error) {
             this.handleError(error, errorCallback)
         }
