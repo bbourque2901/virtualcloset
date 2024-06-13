@@ -12,10 +12,17 @@ public class IncrementOutfitWornCountLambda
     @Override
     public LambdaResponse handleRequest(AuthenticatedLambdaRequest<IncrementOutfitWornCountRequest> ipt, Context ctxt) {
         return super.runActivity(
-            () -> ipt.fromPath(path ->
-                    IncrementOutfitWornCountRequest.builder()
-                            .withId(path.get("id"))
-                            .build()),
+            () -> {
+                IncrementOutfitWornCountRequest unAuthRequest = ipt.fromUserClaims(claims ->
+                        IncrementOutfitWornCountRequest.builder()
+                                .withCustomerId(claims.get("email"))
+                                .build());
+                return ipt.fromPath(path ->
+                        IncrementOutfitWornCountRequest.builder()
+                                .withId(path.get("id"))
+                                .withCustomerId(unAuthRequest.getCustomerId())
+                                .build());
+            },
             (request, serviceComponent) ->
                     serviceComponent.provideIncrementOutfitWornCountActivity().handleRequest(request)
         );
