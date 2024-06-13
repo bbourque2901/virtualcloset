@@ -52,14 +52,14 @@ import DataStore from "../util/DataStore";
         let cloth;
         for (cloth of clothing) {
             clothingHtml += `
-            <tr id= "${cloth.id}">
+            <tr id= "${cloth.clothingId}">
                 <td>${cloth.category || ''}</td>
                 <td>${cloth.color || ''}</td>
                 <td>${cloth.fit || ''}</td>
                 <td>${cloth.length || ''}</td>
                 <td>${cloth.occasion || ''}</td>
                 <td>${cloth.weather || ''}</td>
-                <td>${cloth.wornCount} <button data-id="${cloth.id}" class="button modify-wornCount">+</button></td>
+                <td>${cloth.wornCount} <button data-id="${cloth.clothingId}" class="button modify-wornCount">+</button></td>
             </tr>`;
         }
 
