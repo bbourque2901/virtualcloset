@@ -13,7 +13,7 @@ export default class virtualClosetClient extends BindingClass {
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing', 'updateOutfitName',
              'createClothing', 'getOutfitClothes', 'addClothingToOutfit', 'getUserOutfits', 'removeOutfit', 'removeClothingFromOutfit',
-            'getSortedClothing', 'getSortedOutfit'];
+            'getSortedClothing', 'getSortedOutfit', 'incrementClothingWC', 'incrementOutfitWC'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -333,6 +333,49 @@ export default class virtualClosetClient extends BindingClass {
             this.handleError(error, errorCallback);
         }
     }
+
+    /**
+     * Update worncount of an outfit.
+     * @param id The id of the outfit to update.
+     * @returns The updated outfit.
+     */
+    async incrementOutfitWC(id, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can modify the worncount.");
+            const response = await this.axiosClient.post(`outfits/${id}/wornCount`, {
+                id: id,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.outfit;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+    /**
+     * Update worncount of a clothing item.
+     * @param id The id of the clothing item to update.
+     * @returns The updated clothing item.
+     */
+    async incrementClothingWC(clothingId, errorCallback) {
+        try {
+            const token = await this.getTokenOrThrow("Only authenticated users can modify the worncount.");
+            const response = await this.axiosClient.post(`clothing/${clothingId}/wornCount`, {
+                clothingId: clothingId,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data.clothing;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
 
     /**
      * Helper method to log the error and run any error functions.
