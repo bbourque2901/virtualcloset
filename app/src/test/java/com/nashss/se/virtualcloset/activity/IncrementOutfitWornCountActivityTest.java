@@ -2,6 +2,7 @@ package com.nashss.se.virtualcloset.activity;
 
 import com.nashss.se.virtualcloset.activity.requests.IncrementOutfitWornCountRequest;
 import com.nashss.se.virtualcloset.activity.results.IncrementOutfitWornCountResult;
+import com.nashss.se.virtualcloset.dynamodb.ClothingDao;
 import com.nashss.se.virtualcloset.dynamodb.Outfit;
 import com.nashss.se.virtualcloset.dynamodb.OutfitDao;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +19,15 @@ class IncrementOutfitWornCountActivityTest {
     @Mock
     private OutfitDao outfitDao;
 
+    @Mock
+    private ClothingDao clothingDao;
+
     private IncrementOutfitWornCountActivity incrementOutfitWornCountActivity;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
-        incrementOutfitWornCountActivity = new IncrementOutfitWornCountActivity(outfitDao);
+        incrementOutfitWornCountActivity = new IncrementOutfitWornCountActivity(outfitDao, clothingDao);
     }
 
     @Test

@@ -51,18 +51,20 @@ addOutfitsToPage() {
         return;
     }
 
-    let outfitsHtml = '<table id="outfit-worncount-index"><tr><th>Name</th><th>Tags</th><th>Worn Count</th></tr>';
-    let outfit;
-    for (outfit of outfits) {
-        outfitsHtml += `
-        <tr id= "${outfit.id}">
-            <td>
-                <a href="outfit.html?id=${outfit.id}">${outfit.name}</a>
-            </td>
-            <td>${outfit.tags?.join(', ') || ''}</td>
-            <td>${outfit.wornCount}</td>
-        </tr>`;
-    }
+    const limit = 5; 
+        let outfitsHtml = '<table id="outfit-worncount-index"><tr><th>Name</th><th>Tags</th><th>Worn Count</th></tr>';
+        let outfit;
+        for (let i = 0; i < Math.min(outfits.length, limit); i++) {
+            outfit = outfits[i];
+            outfitsHtml += `
+            <tr id="${outfit.id}">
+                <td>
+                    <a href="outfit.html?id=${outfit.id}">${outfit.name}</a>
+                </td>
+                <td>${outfit.tags?.join(', ') || ''}</td>
+                <td>${outfit.wornCount}</td>
+            </tr>`;
+        }
 
     document.getElementById('outfits').innerHTML = outfitsHtml;
 
@@ -79,20 +81,22 @@ addClothingToPage() {
         return;
     }
 
-    let clothingHtml = '<table id="clothing-worncount-index"><tr><th>Category</th><th>Color</th><th>Fit</th><th>Length</th><th>Occasion</th><th>Weather</th><th>Worn Count</th>';
-    let cloth;
-    for (cloth of clothing) {
-        clothingHtml += `
-        <tr id= "${cloth.id}">
-            <td>${cloth.category || ''}</td>
-            <td>${cloth.color || ''}</td>
-            <td>${cloth.fit || ''}</td>
-            <td>${cloth.length || ''}</td>
-            <td>${cloth.occasion || ''}</td>
-            <td>${cloth.weather || ''}</td>
-            <td>${cloth.wornCount}</td>
-        </tr>`;
-    }
+    const limit = 5; 
+        let clothingHtml = '<table id="clothing-worncount-index"><tr><th>Category</th><th>Color</th><th>Fit</th><th>Length</th><th>Occasion</th><th>Weather</th><th>Worn Count</th></tr>';
+        let cloth;
+        for (let i = 0; i < Math.min(clothing.length, limit); i++) {
+            cloth = clothing[i];
+            clothingHtml += `
+            <tr id="${cloth.id}">
+                <td>${cloth.category || ''}</td>
+                <td>${cloth.color || ''}</td>
+                <td>${cloth.fit || ''}</td>
+                <td>${cloth.length || ''}</td>
+                <td>${cloth.occasion || ''}</td>
+                <td>${cloth.weather || ''}</td>
+                <td>${cloth.wornCount}</td>
+            </tr>`;
+        }
 
     document.getElementById('clothing').innerHTML = clothingHtml;
 

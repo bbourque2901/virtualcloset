@@ -17,7 +17,14 @@
     <p class="hidden error" id="error-message"> </p>
     <div class="card">
         <h2>Add Clothes to Outfit</h2>
-        <button class="button" id="add-clothing">Add New Clothing Item</button>
+        <button class="button" id="add-clothing">New Clothing Item</button>
+        <button class="button" id="add-existing-clothing">From your closet</button>
+        <div id="existing-clothing-dropdown" class="hidden">
+            <select id="existing-clothing-select">
+                <option value="" disabled selected>Select clothing item</option>
+            </select>
+            <button class="button" id="add-selected-clothing">Add Selected Clothing</button>
+        </div>
     </div>
 </body>
 

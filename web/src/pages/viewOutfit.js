@@ -10,7 +10,8 @@ class ViewOutfit extends BindingClass {
     constructor() {
         super();
         this.bindClassMethods(['clientLoaded', 'mount', 'addOutfitToPage', 'updateOutfitName',
-             'addClothingToPage', 'navigateToAddClothingPage', 'submitClothing', 'remove'], this);
+             'addClothingToPage', 'navigateToAddClothingPage', 'submitClothing', 'remove',
+            'showExistingClothingDropdown', 'addSelectedClothingToOutfit'], this);
         this.dataStore = new DataStore();
         this.dataStore.addChangeListener(this.addOutfitToPage);
         this.dataStore.addChangeListener(this.addClothingToPage);
@@ -56,6 +57,14 @@ class ViewOutfit extends BindingClass {
         if (document.getElementById('update-outfit')) {
         document.getElementById('update-outfit').addEventListener('click', this.updateOutfitName);
         }
+
+        if (document.getElementById('add-existing-clothing')) {
+            document.getElementById('add-existing-clothing').addEventListener('click', this.showExistingClothingDropdown);
+        }
+
+        if (document.getElementById('add-selected-clothing')) {
+            document.getElementById('add-selected-clothing').addEventListener('click', this.addSelectedClothingToOutfit);
+        }
     }
 
     /**
@@ -66,13 +75,16 @@ class ViewOutfit extends BindingClass {
         if (outfit == null) {
             return;
         }
-
+    
         document.getElementById('outfit-name').innerText = outfit.name;
-
+    
         let tagHtml = '';
-        let tag;
-        for (tag of outfit.tags) {
-            tagHtml += '<div class="tag">' + tag + '</div>';
+        if (outfit.tags && outfit.tags.length > 0) {
+            for (let tag of outfit.tags) {
+                tagHtml += '<div class="tag">' + tag + '</div>';
+            }
+        } else {
+            tagHtml = ''; 
         }
         document.getElementById('tags').innerHTML = tagHtml;
     }
@@ -210,6 +222,63 @@ class ViewOutfit extends BindingClass {
     document.getElementById('outfit-name').innerText = newName;
     this.dataStore.set('outfit', newOutfit);
     console.log("button clicked!");
+    }
+
+    async showExistingClothingDropdown() {
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = '';
+        errorMessageDisplay.classList.add('hidden');
+
+        const dropdown = document.getElementById('existing-clothing-dropdown');
+        const select = document.getElementById('existing-clothing-select');
+
+        try {
+            const userInfo = await this.client.getIdentity();
+            if (!userInfo) {
+                throw new Error("User not logged in");
+            }
+            const userId = userInfo.id;
+            const clothingItems = await this.client.getUserClothing(userId);
+
+            select.innerHTML = '<option value="" disabled selected>Select clothing item</option>';
+
+            clothingItems.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.clothingId;
+                option.text = `${item.category || ''} - ${item.color}`;
+                select.appendChild(option);
+            });
+            dropdown.classList.remove('hidden');
+        } catch (error) {
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
+        }
+          
+    }
+
+    async addSelectedClothingToOutfit() {
+        const errorMessageDisplay = document.getElementById('error-message');
+        errorMessageDisplay.innerText = '';
+        errorMessageDisplay.classList.add('hidden');
+
+        const select = document.getElementById('existing-clothing-select');
+        const selectedClothingId = select.value;
+        const outfit = this.dataStore.get('outfit');
+
+        if (!selectedClothingId || !outfit) {
+            errorMessageDisplay.innerText = 'Please select a clothing item and make sure the outfit is loaded.';
+            errorMessageDisplay.classList.remove('hidden');
+            return;
+        }
+
+        try {
+            const clothingList = await this.client.addClothingToOutfit(outfit.id, selectedClothingId);
+            this.dataStore.set('clothingItems', clothingList);
+            document.getElementById('existing-clothing-dropdown').classList.add('hidden');
+        } catch (error) {
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
+        }
     }
     
 }
