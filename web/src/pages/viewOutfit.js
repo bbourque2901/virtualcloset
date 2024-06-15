@@ -75,13 +75,16 @@ class ViewOutfit extends BindingClass {
         if (outfit == null) {
             return;
         }
-
+    
         document.getElementById('outfit-name').innerText = outfit.name;
-
+    
         let tagHtml = '';
-        let tag;
-        for (tag of outfit.tags) {
-            tagHtml += '<div class="tag">' + tag + '</div>';
+        if (outfit.tags && outfit.tags.length > 0) {
+            for (let tag of outfit.tags) {
+                tagHtml += '<div class="tag">' + tag + '</div>';
+            }
+        } else {
+            tagHtml = ''; 
         }
         document.getElementById('tags').innerHTML = tagHtml;
     }
