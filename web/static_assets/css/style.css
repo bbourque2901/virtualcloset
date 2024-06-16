@@ -9,12 +9,17 @@
     font-family: 'Bulky Pix';
     src: url("BULKYPIX.TTF");
 }
+@font-face {
+    font-family: 'DDBB';
+    src: url("DisposableDroidBB_bld.ttf");
+}
 
 .background {
     background-color: #b566df;
     margin: 0;
     counter-reset: section;
-    font-family: "Bulky Pix";
+    font-family: "DDBB";
+    font-size: 20px;
 }
 
 .header {
@@ -22,7 +27,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--primary-color);
+    background-color: #b566df;
     color: var(--secondary-color);
     padding: 4px 20px;
     font-weight: bold;
@@ -43,9 +48,9 @@
   color: var(--secondary-color);
   padding: 6px 8px 4px 8px;
   text-align: center;
-  font-family: "Bulky Pix";
+  font-family: "DDBB";
   font-weight: bold;
-  font-size: 16px;
+  font-size: 20px;
   text-decoration: none;
   cursor: pointer;
 }
