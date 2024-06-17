@@ -71,10 +71,6 @@
     max-width: 1000px;
 }
 
-.content-middle button {
-    width: max-content;
-}
-
 .container {
     display: flex;
     justify-content: center;
