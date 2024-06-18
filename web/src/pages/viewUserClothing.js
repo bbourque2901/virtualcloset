@@ -102,21 +102,28 @@ import DataStore from "../util/DataStore";
         if (!removeButton.classList.contains('remove-clothing')) {
             return;
         }
-
+    
+        const clothingId = removeButton.getAttribute('data-id');
+    
+        const confirmDeletion = window.confirm("Deleting this clothing item will also remove it from all your outfits. Do you want to proceed?");
+        
+        if (!confirmDeletion) {
+            return;
+        }
+    
         removeButton.innerText = "Removing...";
-
+    
         const errorMessageDisplay = document.getElementById('error-message');
-         errorMessageDisplay.innerText = ``;
-         errorMessageDisplay.classList.add('hidden');
-
-         const clothingId = removeButton.getAttribute('data-id');
-
-         await this.client.removeClothing(clothingId, (error) => {
-           errorMessageDisplay.innerText = `Error: ${error.message}`;
-           errorMessageDisplay.classList.remove('hidden');
-         });
-
-         document.getElementById(clothingId).remove()
+        errorMessageDisplay.innerText = ``;
+        errorMessageDisplay.classList.add('hidden');
+    
+        try {
+            await this.client.removeClothing(clothingId);
+            document.getElementById(clothingId).remove();
+        } catch (error) {
+            errorMessageDisplay.innerText = `Error: ${error.message}`;
+            errorMessageDisplay.classList.remove('hidden');
+        }
     }
 
 }
