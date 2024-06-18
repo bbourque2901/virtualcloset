@@ -452,6 +452,26 @@ Resources:
             Path: /outfits/{id}
             Method: delete
 
+  DeleteClothingLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: !GetAtt AccessRole.Arn
+      CodeUri: app
+      Handler: com.nashss.se.virtualcloset.lambda.DeleteClothingLambda::handleRequest
+      Runtime: java11
+      Architectures:
+        - x86_64
+      MemorySize: 512
+      Environment:
+        Variables:
+          JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+      Events:
+        VirtualCloset:
+          Type: Api
+          Properties:
+            Path: /clothing/{clothingId}
+            Method: delete
+
   GetSortedOutfitLambda:
     Type: AWS::Serverless::Function
     Properties:
