@@ -78,6 +78,7 @@ class IncrementOutfitWornCountActivityTest {
 
         IncrementOutfitWornCountRequest request = IncrementOutfitWornCountRequest.builder()
                 .withId(outfitId)
+                .withCustomerId("customerId")
                 .build();
 
         IncrementOutfitWornCountResult result = incrementOutfitWornCountActivity.handleRequest(request);

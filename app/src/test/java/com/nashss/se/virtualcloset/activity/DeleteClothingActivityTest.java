@@ -98,6 +98,7 @@ class DeleteClothingActivityTest {
 
         DeleteClothingRequest request = DeleteClothingRequest.builder()
                 .withClothingId(clothingId)
+                .withCustomerId("customerID")
                 .build();
 
         //WHEN
