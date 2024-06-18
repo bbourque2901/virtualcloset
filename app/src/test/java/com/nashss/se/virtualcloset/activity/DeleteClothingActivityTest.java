@@ -4,6 +4,7 @@ import com.nashss.se.virtualcloset.activity.requests.DeleteClothingRequest;
 import com.nashss.se.virtualcloset.activity.results.DeleteClothingResult;
 import com.nashss.se.virtualcloset.dynamodb.Clothing;
 import com.nashss.se.virtualcloset.dynamodb.ClothingDao;
+import com.nashss.se.virtualcloset.dynamodb.OutfitDao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -17,12 +18,15 @@ class DeleteClothingActivityTest {
     @Mock
     private ClothingDao clothingDao;
 
+    @Mock
+    private OutfitDao outfitDao;
+
     private DeleteClothingActivity deleteClothingActivity;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
-        deleteClothingActivity = new DeleteClothingActivity(clothingDao);
+        deleteClothingActivity = new DeleteClothingActivity(clothingDao, outfitDao);
     }
 
     @Test

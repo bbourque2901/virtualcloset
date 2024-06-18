@@ -5,25 +5,32 @@ import com.nashss.se.virtualcloset.activity.results.DeleteClothingResult;
 import com.nashss.se.virtualcloset.converters.ModelConverter;
 import com.nashss.se.virtualcloset.dynamodb.Clothing;
 import com.nashss.se.virtualcloset.dynamodb.ClothingDao;
+import com.nashss.se.virtualcloset.dynamodb.Outfit;
+import com.nashss.se.virtualcloset.dynamodb.OutfitDao;
 import com.nashss.se.virtualcloset.models.ClothingModel;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 
 public class DeleteClothingActivity {
     private final Logger log = LogManager.getLogger();
     private final ClothingDao clothingDao;
+    private final OutfitDao outfitDao;
 
     /**
      * Instantiates a new DeleteClothingActivity object.
      *
      * @param clothingDao clothingDao to access the clothing table.
+     * @param outfitDao outfitDao to access the outfits table.
      */
     @Inject
-    public DeleteClothingActivity(ClothingDao clothingDao) {
+    public DeleteClothingActivity(ClothingDao clothingDao, OutfitDao outfitDao) {
         this.clothingDao = clothingDao;
+        this.outfitDao = outfitDao;
     }
 
     /**
@@ -45,6 +52,16 @@ public class DeleteClothingActivity {
             return DeleteClothingResult.builder()
                     .build();
         }
+
+        List<Outfit> outfitsWithClothing = outfitDao.getOutfitsByClothingId(reqClothingId);
+
+        for (Outfit outfit : outfitsWithClothing) {
+            List<Clothing> clothingItems = new ArrayList<>(outfit.getClothingItems());
+            clothingItems.removeIf(item -> item.getClothingId().equals(reqClothingId));
+            outfit.setClothingItems(clothingItems);
+            outfitDao.saveOutfit(outfit);
+        }
+
         ClothingModel clothingModel = new ModelConverter().toClothingModel(clothing);
 
         return DeleteClothingResult.builder()
