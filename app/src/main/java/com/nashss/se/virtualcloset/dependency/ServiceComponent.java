@@ -3,6 +3,7 @@ package com.nashss.se.virtualcloset.dependency;
 import com.nashss.se.virtualcloset.activity.AddClothingToOutfitActivity;
 import com.nashss.se.virtualcloset.activity.CreateClothingActivity;
 import com.nashss.se.virtualcloset.activity.CreateOutfitActivity;
+import com.nashss.se.virtualcloset.activity.DeleteClothingActivity;
 import com.nashss.se.virtualcloset.activity.DeleteClothingFromOutfitActivity;
 import com.nashss.se.virtualcloset.activity.DeleteOutfitActivity;
 import com.nashss.se.virtualcloset.activity.GetClothingActivity;
@@ -113,6 +114,12 @@ public interface ServiceComponent {
      * @return IncrementOutfitWornCountActivity
      */
     IncrementOutfitWornCountActivity provideIncrementOutfitWornCountActivity();
+
+    /**
+     * Creates the relevant activity.
+     * @return DeleteClothingActivity
+     */
+    DeleteClothingActivity provideDeleteClothingActivity();
 }
 
 

@@ -40,6 +40,8 @@ U14. As a user, I want to be able to update how many times I've worn an outfit
 
 U15. As a user, I want to be able to update how many times I've worn an article of clothing
 
+U16. As a user, I want to be able to remove an article of clothing.
+
 ## Stretch Goals
 
 - Making the website more interactive with visuals - having pictures/ representation of the clothing
@@ -162,6 +164,14 @@ U15. As a user, I want to be able to update how many times I've worn an article 
 - Authentication needed
 - Accepts the outfit ID
 - Returns the updated outfit worn count
+
+## Remove Clothing Endpoint
+
+- Accepts DELETE requests to /clothing/:clothingId
+- Authentication needed
+- Accepts clothingID of clothing itm to be deleted
+- Returns an updated clothing list
+  - If the clothing ID isn’t found, it will throw a ClothingNotFoundException
 
 # Tables 
 

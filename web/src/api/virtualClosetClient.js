@@ -13,7 +13,7 @@ export default class virtualClosetClient extends BindingClass {
 
         const methodsToBind = ['clientLoaded', 'getIdentity', 'login', 'logout', 'getOutfit', 'createOutfit', 'getClothing', 'updateOutfitName',
              'createClothing', 'getOutfitClothes', 'addClothingToOutfit', 'getUserOutfits', 'removeOutfit', 'removeClothingFromOutfit',
-            'getSortedClothing', 'getSortedOutfit', 'incrementClothingWC', 'incrementOutfitWC'];
+            'getSortedClothing', 'getSortedOutfit', 'incrementClothingWC', 'incrementOutfitWC', 'removeClothing'];
         this.bindClassMethods(methodsToBind, this);
 
         this.authenticator = new Authenticator();;
@@ -222,7 +222,7 @@ export default class virtualClosetClient extends BindingClass {
      /**
           * removes an outfit.
           * @param id The id of the outfit.
-          * @returns The list of clothing items in an outfit.
+          * @returns The updated list of outfits.
           */
      async removeOutfit(id, errorCallback) {
         try {
@@ -237,6 +237,29 @@ export default class virtualClosetClient extends BindingClass {
                   }
                 });
             return response.data.outfits;
+        } catch (error) {
+            this.handleError(error, errorCallback)
+        }
+    }
+
+     /**
+          * removes clothing item.
+          * @param id The id of the clothing.
+          * @returns The updated list of clothing.
+          */
+     async removeClothing(clothingId, errorCallback) {
+        try {
+            console.log('delete endpoint called with clothingId ' + clothingId);
+            const token = await this.getTokenOrThrow("Only authenticated users can remove a clothing item.");
+            const response = await this.axiosClient.delete(`clothing/${clothingId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                  },
+                  data: {
+                    clothingId: clothingId
+                  }
+                });
+            return response.data.clothing;
         } catch (error) {
             this.handleError(error, errorCallback)
         }

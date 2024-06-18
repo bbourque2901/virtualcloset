@@ -1,5 +1,6 @@
 package com.nashss.se.virtualcloset.dynamodb;
 
+import com.nashss.se.virtualcloset.exceptions.ClothingNotFoundException;
 import com.nashss.se.virtualcloset.exceptions.OutfitNotFoundException;
 import com.nashss.se.virtualcloset.exceptions.UserNotFoundException;
 
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -130,6 +132,25 @@ public class OutfitDao {
 
         return dynamoDBMapper.query(Outfit.class, queryExpression);
 
+    }
+
+    /**
+     * Scans outfits for matching clothingId.
+     * @param clothingId clothingId being searched
+     * @return list of outfits that contain the clothing item.
+     */
+    public List<Outfit> getOutfitsByClothingId(String clothingId) {
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+
+        if (clothingId == null) {
+            throw new ClothingNotFoundException("No Clothing with id " + clothingId);
+        }
+
+        List<Outfit> allOutfits = dynamoDBMapper.scan(Outfit.class, scanExpression);
+
+        return allOutfits.stream().filter(outfit -> outfit.getClothingItems().stream()
+                .anyMatch(clothing -> clothing.getClothingId().equals(clothingId)))
+                .collect(Collectors.toList());
     }
 }
 
