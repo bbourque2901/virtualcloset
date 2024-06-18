@@ -33,6 +33,7 @@ mount() {
 
     this.client = new VirtualClosetClient();
     this.clientLoaded();
+    document.getElementById('view-all-clothing').addEventListener('click', this.redirectToAllClothing);
 }
 
 /**
@@ -57,7 +58,7 @@ addClothingToPage() {
      * Redirect to the all clothing items page.
      */
 redirectToAllClothing() {
-    window.location.href = '/allClothing.html';
+    window.location.href = '/userClothing.html';
 }
 
 }
