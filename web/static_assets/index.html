@@ -9,15 +9,18 @@
 <body class="background">
     <header class="header" id="header"></header>
     <div class="container">
-        <div class="outfit-buttons">
+        <div id="outfit-buttons" class="outfit-buttons">
             <a href="userOutfits.html" class="button">Outfits</a>
             <a href="createOutfit.html" class="button">Add Outfit</a>
         </div>
         <div class="content-middle">
             <img src="images/pixel-chix.png" alt="Centered Image">
-            <a href="viewUserRecommendations.html" class="button">Recommendations!</a>
+            <div id="login-message" class="login-message" style="display: none;">
+                Please login to access your closet!
+            </div>
+            <a id="recommendations-button" href="viewUserRecommendations.html" class="button">Recommendations!</a>
         </div>
-        <div class="clothes-buttons">
+        <div id="clothes-buttons" class="clothes-buttons">
             <a href="userClothing.html" class="button">Clothes</a>
             <a href="createClothing.html" class="button">Add Clothes</a>
         </div>
@@ -25,3 +28,4 @@
 </body>
 
 </html>
+
