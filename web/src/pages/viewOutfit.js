@@ -2,6 +2,7 @@ import VirtualClosetClient from '../api/virtualClosetClient';
 import Header from '../components/header';
 import BindingClass from "../util/bindingClass";
 import DataStore from "../util/DataStore";
+import Authenticator from '../api/authenticator';
 
 /**
  * Logic needed for the view outfit page of the website.
@@ -287,6 +288,21 @@ class ViewOutfit extends BindingClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
+    const authenticator = new Authenticator();
+    const isLoggedIn = await authenticator.isUserLoggedIn();
+
+    if (isLoggedIn) {
+        document.getElementById("outfit-buttons").style.display = "block";
+        document.getElementById("recommendations-button").style.display = "block";
+        document.getElementById("clothes-buttons").style.display = "block";
+        document.getElementById("login-message").style.display = "none";
+    } else {
+        document.getElementById("outfit-buttons").style.display = "none";
+        document.getElementById("recommendations-button").style.display = "none";
+        document.getElementById("clothes-buttons").style.display = "none";
+        document.getElementById("login-message").style.display = "block";
+    }
+
     const viewOutfit = new ViewOutfit();
     viewOutfit.mount();
 };
