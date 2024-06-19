@@ -292,15 +292,25 @@ const main = async () => {
     const isLoggedIn = await authenticator.isUserLoggedIn();
 
     if (isLoggedIn) {
-        document.getElementById("outfit-buttons").style.display = "block";
-        document.getElementById("recommendations-button").style.display = "block";
-        document.getElementById("clothes-buttons").style.display = "block";
-        document.getElementById("login-message").style.display = "none";
+        const outfitButtons = document.getElementById("outfit-buttons");
+        const recommendationsButton = document.getElementById("recommendations-button");
+        const clothesButtons = document.getElementById("clothes-buttons");
+        const loginMessage = document.getElementById("login-message");
+
+        if (outfitButtons) outfitButtons.style.display = "block";
+        if (recommendationsButton) recommendationsButton.style.display = "block";
+        if (clothesButtons) clothesButtons.style.display = "block";
+        if (loginMessage) loginMessage.style.display = "none";
     } else {
-        document.getElementById("outfit-buttons").style.display = "none";
-        document.getElementById("recommendations-button").style.display = "none";
-        document.getElementById("clothes-buttons").style.display = "none";
-        document.getElementById("login-message").style.display = "block";
+        const outfitButtons = document.getElementById("outfit-buttons");
+        const recommendationsButton = document.getElementById("recommendations-button");
+        const clothesButtons = document.getElementById("clothes-buttons");
+        const loginMessage = document.getElementById("login-message");
+
+        if (outfitButtons) outfitButtons.style.display = "none";
+        if (recommendationsButton) recommendationsButton.style.display = "none";
+        if (clothesButtons) clothesButtons.style.display = "none";
+        if (loginMessage) loginMessage.style.display = "block";
     }
 
     const viewOutfit = new ViewOutfit();
