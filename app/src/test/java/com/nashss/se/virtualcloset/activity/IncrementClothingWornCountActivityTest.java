@@ -40,6 +40,7 @@ class IncrementClothingWornCountActivityTest {
 
         IncrementClothingWornCountRequest request = IncrementClothingWornCountRequest.builder()
                 .withClothingId(clothingId)
+                .withCustomerId("customerId")
                 .build();
 
         IncrementClothingWornCountResult result = incrementClothingWornCountActivity.handleRequest(request);

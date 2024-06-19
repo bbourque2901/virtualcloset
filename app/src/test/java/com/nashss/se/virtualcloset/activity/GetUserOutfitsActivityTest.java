@@ -2,8 +2,10 @@ package com.nashss.se.virtualcloset.activity;
 
 import com.nashss.se.virtualcloset.activity.requests.GetUserOutfitsRequest;
 import com.nashss.se.virtualcloset.activity.results.GetUserOutfitsResult;
+import com.nashss.se.virtualcloset.converters.ModelConverter;
 import com.nashss.se.virtualcloset.dynamodb.Outfit;
 import com.nashss.se.virtualcloset.dynamodb.OutfitDao;
+import com.nashss.se.virtualcloset.models.OutfitModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -57,7 +59,13 @@ class GetUserOutfitsActivityTest {
         GetUserOutfitsResult result = getUserOutfitsActivity.handleRequest(request);
 
         //THEN
-        assertTrue(result.getOutfits().size() == 2);
-        assertNotNull(result);
+        assertEquals(outfits.size(), result.getOutfits().size());
+
+        List<OutfitModel> expectedOutfitModels = new ModelConverter().toOutfitModelList(outfits);
+        List<OutfitModel> actualOutfitModels = result.getOutfits();
+
+        for (int i = 0; i < outfits.size(); i++) {
+            assertEquals(expectedOutfitModels.get(i), actualOutfitModels.get(i));
+        }
     }
 }

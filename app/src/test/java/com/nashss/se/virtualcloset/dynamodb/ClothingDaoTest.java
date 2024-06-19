@@ -1,8 +1,6 @@
 package com.nashss.se.virtualcloset.dynamodb;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.nashss.se.virtualcloset.exceptions.ClothingNotFoundException;
 import com.nashss.se.virtualcloset.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,13 +9,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class ClothingDaoTest {
@@ -27,8 +25,14 @@ class ClothingDaoTest {
 
     @Mock
     private PaginatedScanList<Clothing> scanList;
+
+    @Mock
+    private PaginatedQueryList<Clothing> queryList;
     @Captor
     ArgumentCaptor<DynamoDBScanExpression> scanExpressionArgumentCaptor;
+
+    @Captor
+    private ArgumentCaptor<DynamoDBQueryExpression<Clothing>> queryExpressionArgumentCaptor;
 
     @BeforeEach
     public void setUp() {
@@ -83,6 +87,57 @@ class ClothingDaoTest {
 
         //WHEN+THEN
         assertThrows(UserNotFoundException.class, () -> clothingDao.getAllClothingForUser(id));
+    }
+
+    @Test
+    public void getClothingSortedByWornCount_withCustomerId_returnsListOfClothingSortedByWornCount() {
+        // GIVEN
+        String customerId = "customer123";
+        boolean ascendingOrder = true;
+        List<Clothing> expectedClothingList = new ArrayList<>();
+
+        when(dynamoDBMapper.query(eq(Clothing.class), any(DynamoDBQueryExpression.class))).thenReturn(queryList);
+
+        // WHEN
+        List<Clothing> results = clothingDao.getClothingSortedByWornCount(customerId, ascendingOrder);
+
+        // THEN
+        assertNotNull(results);
+        verify(dynamoDBMapper).query(eq(Clothing.class), queryExpressionArgumentCaptor.capture());
+        assertTrue(!results.isEmpty());
+    }
+
+    @Test
+    public void removeClothing_removesClothingItem() {
+        // GIVEN
+        String clothingId = "clothing123";
+        Clothing clothing = new Clothing();
+        clothing.setClothingId(clothingId);
+
+        when(dynamoDBMapper.load(eq(Clothing.class), eq(clothingId)))
+                .thenReturn(clothing);
+
+        // WHEN
+        Clothing removedClothing = clothingDao.removeClothing(clothingId);
+
+        // THEN
+        assertNotNull(removedClothing);
+        assertEquals(clothingId, removedClothing.getClothingId());
+        verify(dynamoDBMapper, times(1)).delete(eq(clothing));
+    }
+
+    @Test
+    public void saveClothing_savesClothingItem() {
+        // GIVEN
+        Clothing clothing = new Clothing();
+
+        // WHEN
+        Clothing savedClothing = clothingDao.saveClothing(clothing);
+
+        // THEN
+        assertNotNull(savedClothing);
+        verify(dynamoDBMapper).save(clothing);
+        assertEquals(clothing, savedClothing);
     }
 
 }
