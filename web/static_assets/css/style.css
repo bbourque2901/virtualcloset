@@ -24,6 +24,18 @@
     font-size: 20px;
 }
 
+#login-message {
+    font-size: 30px;
+    background-color: var(--tertiary-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .header {
     /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
     justify-content: space-between;
