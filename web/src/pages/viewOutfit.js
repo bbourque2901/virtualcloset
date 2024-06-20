@@ -290,26 +290,17 @@ class ViewOutfit extends BindingClass {
 const main = async () => {
     const authenticator = new Authenticator();
     const isLoggedIn = await authenticator.isUserLoggedIn();
+    const outfitButtons = document.getElementById("outfit-options");
+    const recommendationsButton = document.getElementById("recommendations-button");
+    const loginMessage = document.getElementById("login-message");
 
     if (isLoggedIn) {
-        const outfitButtons = document.getElementById("outfit-buttons");
-        const recommendationsButton = document.getElementById("recommendations-button");
-        const clothesButtons = document.getElementById("clothes-buttons");
-        const loginMessage = document.getElementById("login-message");
-
-        if (outfitButtons) outfitButtons.style.display = "block";
+        if (outfitButtons) outfitButtons.style.display = "flex";
         if (recommendationsButton) recommendationsButton.style.display = "block";
-        if (clothesButtons) clothesButtons.style.display = "block";
         if (loginMessage) loginMessage.style.display = "none";
     } else {
-        const outfitButtons = document.getElementById("outfit-buttons");
-        const recommendationsButton = document.getElementById("recommendations-button");
-        const clothesButtons = document.getElementById("clothes-buttons");
-        const loginMessage = document.getElementById("login-message");
-
         if (outfitButtons) outfitButtons.style.display = "none";
         if (recommendationsButton) recommendationsButton.style.display = "none";
-        if (clothesButtons) clothesButtons.style.display = "none";
         if (loginMessage) loginMessage.style.display = "block";
     }
 
