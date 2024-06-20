@@ -90,14 +90,16 @@ a.button img {
     margin-right: auto;
 }
 
-.outfit-buttons {
+#outfit-options {
     display: flex;
+    flex-direction: row;
     justify-content: center; 
     align-items: center;
     gap: 30px; 
 }
 
-.outfit-buttons a.button {
+
+.character-buttons a.button {
     width: 100px;
 }
 
